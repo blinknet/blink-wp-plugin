@@ -1,5 +1,5 @@
 # URLS:
-* Front: https://api.demopaywall.com
+* Front: https://qa.demopaywall.com
 * API: https://api.qa.demopaywall.com
 * Demo website: https://qa.blinktimes.com/
 * Second demo website: https://qa.blinkstreetjournal.com
