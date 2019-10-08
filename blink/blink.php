@@ -36,6 +36,8 @@ function includePluginFiles()
     include($BLINK_PLUGIN_FOLDER_PATH . 'src/crypto/PostComment.php');
     include($BLINK_PLUGIN_FOLDER_PATH . 'src/crypto/Utils.php');
 
+    //TODO | Uncomment to show example integration
+    //include($BLINK_PLUGIN_FOLDER_PATH . 'src/example/PhpIntegration.php');
 }
 
 add_action( 'plugins_loaded', 'includePluginFiles');

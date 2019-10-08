@@ -51,15 +51,15 @@ class Constants
 
     const DOMAIN = "demopaywall.com/";
     const PAYWALL_VERSION = "1.0/";
-    const PAYWALL_FILE = "blink-paywall.js";
+    const PAYWALL_FILE = "blink-sdk.js";
 
     const HTTPS = "https://";
 
     public static function getPaywallUrl() : string {
-        return self::HTTPS . self::DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
+        return self::HTTPS . 'qa.' . self::DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
     }
 
     public static function getApiUrl() : string {
-        return self::HTTPS . 'api.' . self::DOMAIN;
+        return self::HTTPS . 'api.'. 'qa.' . self::DOMAIN;
     }
 }
