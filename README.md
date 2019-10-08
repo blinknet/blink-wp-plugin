@@ -6,3 +6,6 @@
 
 # Mock data
 Credit card: a series of 42 ( eg. `4242424242` ) until you fill the credit card info.
+
+### Integration
+[Example](./blink/src/example)
