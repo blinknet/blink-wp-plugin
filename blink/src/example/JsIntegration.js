@@ -26,7 +26,7 @@ function successCallback(response) {
     // Find the paywall in the page
     let paywall = document.getElementById('blink-container');
     // Remove the paywall iframe or the error iframe inside the container
-    paywall.innerHTML = ""
+    paywall.innerHTML = "";
     //TODO
     // The rest of the JS content management should be placed here
 }
@@ -38,7 +38,7 @@ function payForContent() {
     if (blink_plugin.status === 'disabled') {
         return;
     }
-    blinkSDK.requestPayment(post_metadata.paymentInfo, successCallback)
+    blinkSDK.requestPayment(post_metadata.paymentInfo, successCallback);
 }
 
 /**
