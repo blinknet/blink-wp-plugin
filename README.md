@@ -6,6 +6,9 @@
 
 # Mock data
 Credit card: a series of 42 ( eg. `4242424242` ) until you fill the credit card info.
+Merchant account:
+  * Email : `test@aaj.org`
+  * Password : `GvFTjVXJAp6RQcUzme6HpWPN`
 
 ### Integration
 [Example](./blink/src/example)
