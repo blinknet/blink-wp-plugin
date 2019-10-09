@@ -46,7 +46,7 @@ function payForContent() {
  */
 function initializeWidget() {
     if (blink_plugin.status === 'disabled') {
-        return
+        return;
     }
     blinkSDK.setOptions({publisherDomainId: publisher.meta.publisher_id});
     // request a payment again if a users logs in the same tab with an another account
