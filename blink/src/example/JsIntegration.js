@@ -1,90 +1,58 @@
-var blink_plugin = { status: 'enabled' };
+/**
+ * The plugin status indicates if SDK methods can be safely called and all required variables are inserted
+ * using the wp_localize_script() hook.
+ * Required variables:
+ *      -> post_metadata.paymentInfo   | type : Object
+ *      -> publisher.meta.publisher_id | type : int
+ *
+ * Status meaning:
+ *      -> enabled  : The Blink wordpress plugin is enabled and configured correctly
+ *      -> disabled : The plugin is enabled but the private key is missing from the database
+ *                    ( e.g the publisher is not logged in the plugin settings page )
+ */
+var blink_plugin = {status: 'enabled'};
 
-function showBlinkPaywall() {
-    let paywall = document.getElementById('blink-paywall-placeholder');
-    paywall.style.display = "flex"
-}
-
-function hideBlinkPaywall() {
-    let paywall = document.getElementById('blink-paywall-placeholder');
-    paywall.style.display = "none"
-}
-
-function emptyPaywallPlaceHolder() {
-    let paywall = document.getElementById('blink-paywall-placeholder');
+/**
+ * Example implementation of a success callback.
+ *
+ * blinkSDK will call the success callback whenever a payment is successfully performed.
+ *
+ * In the case of any errors while performing the payment (e.g. "Insufficient Funds")
+ * they are handled by the SDK within the error iframe.
+ *
+ * Additionally the blinkSDK CAN call an error callback if provided to the call of requestPayment.
+ */
+function successCallback(response) {
+    // Find the paywall in the page
+    let paywall = document.getElementById('blink-container');
+    // Remove the paywall iframe or the error iframe inside the container
     paywall.innerHTML = "";
+    //TODO
+    // The rest of the JS content management should be placed here
 }
 
-function addPaywallIframeContainer() {
-    let paywall = document.getElementById('blink-paywall-placeholder');
-    if(paywall.innerHTML === "") {
-        let container = document.createElement('div');
-        container.setAttribute('id', 'blink-paywall-iframe-container');
-        container.setAttribute('style', 'margin-top: 0;align-items:center;justify-content:center;flex-direction: column')
-        paywall.appendChild(container)
-    }
-}
-
-function requestContentPayment(response) {
-    hideBlinkPaywall();
-    if (response.error) {
-        console.warn("Encountered an error during the payment");
-        createErrorIframe(response.error);
-        //    show be show error iframe
-    } else {
-        console.warn("You just paid for your article");
-    }
-}
-
+/**
+ *  Request a payment from the SDK with a success callback function.
+ */
 function payForContent() {
-    if(blink_plugin.status === 'disabled') {
-        return
+    if (blink_plugin.status === 'disabled') {
+        return;
     }
-    blinkSDK.requestPayment(post_metadata.paymentInfo, requestContentPayment)
+    blinkSDK.requestPayment(post_metadata.paymentInfo, successCallback);
 }
 
+/**
+ * Initialize the Blink widget
+ */
 function initializeWidget() {
-    if(blink_plugin.status === 'disabled') {
-        return
+    if (blink_plugin.status === 'disabled') {
+        return;
     }
-    blinkSDK.setOptions({enablePopup: true, publisherDomainId: publisher.meta.publisher_id});
+    blinkSDK.setOptions({publisherDomainId: publisher.meta.publisher_id});
+    // request a payment again if a users logs in the same tab with an another account
     blinkSDK.onAuthenticationChange(({authenticated}) => {
         if (!authenticated) {
-            showBlinkPaywall();
             payForContent();
-            addPaywallIframeContainer();
-        } else {
-            emptyPaywallPlaceHolder();
         }
     })
-}
-
-function createErrorIframe(error) {
-    let errorIframeDiv = document.getElementsByClassName("blink-error-iframe-div")[0];
-    // clear maybe existing child nodes
-    errorIframeDiv.innerHTML = '';
-
-    let errorIframeSrc = error.link + "&paymentDetails=" + JSON.stringify(post_metadata.paymentInfo);
-    let errorIframe = document.createElement('iframe');
-
-    errorIframe.style.width = '100%';
-    errorIframe.style.height = '250px';
-    errorIframe.style.zIndex = '1024';
-    errorIframe.style.border = '0';
-    errorIframe.style.boxShadow = '0 8px 16px -8px rgba(0, 0, 0, .3), 0px 13px 27px -5px rgba(50, 50, 93, .25)';
-    errorIframe.style.borderRadius = '18px';
-
-    errorIframe.setAttribute("src", errorIframeSrc);
-    errorIframe.setAttribute('class', 'error-iframe');
-
-    errorIframeDiv.appendChild(errorIframe);
-    blinkSDK.onExternalManualConfirmation(clearErrorIframe);
-    errorIframeDiv.style.display = "block";
-
-}
-
-
-function clearErrorIframe() {
-    let errorIframeDiv = document.getElementsByClassName("blink-error-iframe-div")[0];
-    errorIframeDiv.style.display = "none";
 }
