@@ -1,5 +1,5 @@
 # Publisher prerequisites
-After creating a merchant account, the publisher will have a merchant id and one or more pairs of public and private keys. They will be available in the publisher’s dashboard.
+After creating a merchant account, the publisher will have a merchant id and one or more public keys. They will be available in the publisher’s dashboard.
 
 The merchant id will be required to configure the SDK (see publisherId in setOptions bellow) and the keys will be used to set up payment information for all articles.
 
