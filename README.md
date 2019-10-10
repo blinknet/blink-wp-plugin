@@ -58,7 +58,7 @@ Request payment for an article, should be called after the page loads.
 │
 └── errorCallback(response) (Function | Optional)
     ├── receives a response object which contains an error object.
-    └── The callback should be used do additional error handling
+    └── The callback should be used to do additional error handling.
  ```
 **Returns**: `void`
 
