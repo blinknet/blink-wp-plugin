@@ -1,3 +1,72 @@
+# Publisher prerequisites
+After creating a merchant account, the publisher will have a merchant id and one or more pairs of public and private keys. They will be available in the publisher’s dashboard.
+
+The merchant id will be required to configure the SDK (see publisherId in setOptions bellow) and the keys will be used to set up payment information for all articles.
+
+For each article, the publisher will provide the following information:
+* `resourceId` (str) &rightarrow; unique identifier for an article
+* `offerId` (str)  &rightarrow; unique identifier for an offer, can be the same as resourceId
+* `currencyIsoCode` (str) &rightarrow; payment currency (ex: usd)
+* `amount` (int) &rightarrow; article price 
+    * to avoid precision errors we work with big integers, so the price will be multiplied by 10^6
+* `paymentInfoSignature` (hex str) &rightarrow; proof that the publisher actually created this payment info
+    * a signature over a json object with resourceId, offerId, currencyIsoCode and amount 
+    * keys are ordered alphabetically
+* `merchantPublicKey` (hex str) &rightarrow; the public key that will be used to verify the signature
+
+On an article page, the publisher must add an empty `<div>` element having the id **`blink-container`**.
+The Blink SDK will insert an `<iframe>` in this div, containing the paywall. 
+
+**Note**: If the publisher installs the Blink Wordpress plugin, all these steps are done automatically.
+
+# Blink SDK API
+The Blink SDK is a javascript file that provides integration with the Blink wallet.
+
+When loaded, it will set a “blinkSDK” property on the window object.
+
+### The SDK object has the following API:
+### &rightarrow; setOptions(options)
+Configure the SDK, should be the first function called.
+
+**Parameters**:
+```javascript
+options (Object)
+└── publisherDomainId (int)
+ ```
+**Returns**: `void`
+
+**Example**
+```javascript
+blinkSDK.setOptions({publisherDomainId: 1});
+```
+### &rightarrow; requestPayment(request , callback, errorCallback)
+Request payment for an article, should be called after the page loads.
+
+**Parameters**:
+```javascript
+├── request (Object)
+│   ├── offerId (str)
+│   ├── currencyIsoCode (str)
+│   ├── amount (int)
+│   ├── merchantPublicKey (hex str)
+│   ├── paymentInfoSignature (hex str)
+│   └── comment (str, optional)
+│
+├── callback(response) (Function)
+│   ├── Receives a response object which contains a payment object. 
+│   └── The callback should be used to do the content management.
+│
+└── errorCallback(response) (Function | Optional)
+    ├── receives a response object which contains an error object.
+    └── The callback should be used do additional error handling
+ ```
+**Returns**: `void`
+
+**Example**
+```javascript
+blinkSDK.requestPayment(paymentInfo, successCallback, errorCallback);
+```
+
 # URLS:
 * Front: https://qa.demopaywall.com
 * API: https://api.qa.demopaywall.com
