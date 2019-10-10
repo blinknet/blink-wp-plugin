@@ -67,6 +67,73 @@ Request payment for an article, should be called after the page loads.
 blinkSDK.requestPayment(paymentInfo, successCallback, errorCallback);
 ```
 
+### &rightarrow; isAuthenticated()
+Checks if the user is authenticated.
+
+**Parameters**: `none`
+
+**Returns**: `bool`
+
+**Example**:
+```javascript
+let userStatus = blinkSDK.isAuthenticated()
+```
+
+### &rightarrow; onAuthenticationChange(callback: ({authenticated}) => void)
+Register a callback for changes in authentication status.
+
+**Parameters**:
+```javascript
+callback (Function)
+└── receives an object with authenticated property set to true or false.
+ ```
+ 
+**Returns**: `void`
+
+**Example**:
+```javascript
+blinkSDK.onAuthenticationChange(({authenticated}) => {
+     if (!authenticated) {
+       // user is not authenticated
+       // logic here
+     } else {
+       // user is authenticated 
+       // logic here
+     }
+})
+```
+
+### &rightarrow; isSubscribed()
+Checks if the user is subscribed.
+
+**Parameters**: `none`
+
+**Returns**: `bool`
+
+**Example**:
+```javascript
+let isUserSubscribed = blinkSDK.isSubscribed()
+```
+
+### &rightarrow; onSubscriptionStatusChange(callback: ({subscribed}) => void)
+Register a callback for changes in subscription status.
+**Parameters**:
+```javascript
+callback (Function)
+└── receives an object with subscribed property set to true or false.
+ ```
+**Returns**: `void`
+
+### &rightarrow; promptSubscriptionPopup()
+Prompt the subscription page in the wallet iframe. 
+
+Should be called when the user clicks on “Subscribe” on the publisher’s website.
+
+**Parameters**: `none`
+
+**Returns**: `void`
+
+
 # URLS:
 * Front: https://qa.demopaywall.com
 * API: https://api.qa.demopaywall.com
@@ -76,9 +143,9 @@ blinkSDK.requestPayment(paymentInfo, successCallback, errorCallback);
 # Mock data
 Credit card: a series of 42 ( eg. `4242424242` ) until you fill the credit card info.
 
-Merchant account:
-  * Email : `test@aaj.org`
-  * Password : `GvFTjVXJAp6RQcUzme6HpWPN`
+### Merchant account:
+  * **Email** : `test@aaj.org`
+  * **Password** : `GvFTjVXJAp6RQcUzme6HpWPN`
 
 ### Integration
 [Example](./blink/src/example)
