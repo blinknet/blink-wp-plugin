@@ -11,7 +11,9 @@ class Utils
 {
     /**
      * Extracts the public key of the account from the private key
+     *
      * @param $private_key
+     *
      * @return string
      * @throws \Blink\BlinkCryptoException
      */
@@ -34,5 +36,10 @@ class Utils
     public static function generateUniqueResourceId()
     {
         return hash('sha256', uniqid());
+    }
+
+    public static function sha256($guid)
+    {
+        return hash('sha256', $guid);
     }
 }
