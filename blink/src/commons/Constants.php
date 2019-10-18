@@ -16,9 +16,12 @@ class Constants
 
     // Price
     const ARTICLE_PRICE_INPUT_NAME = 'article_price';
-
     // Resource ID
     const ARTICLE_RESOURCE_ID_INPUT_NAME = 'resource_id';
+    // Use default price checkbox
+    const ARTICLE_USE_DEFAULT_PRICE = 'article_use_default_price';
+    const ARTICLE_USE_DEFAULT_PRICE_VALUE = 'use_default_price_for_article';
+
 
     // Article payment information
     const ARTICLE_RESOURCE_PAYMENT_INFO_METADATA_KEY = '__blink_article_payment_info_json';
