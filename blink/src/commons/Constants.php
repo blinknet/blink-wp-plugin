@@ -61,7 +61,7 @@ class Constants
     const HTTPS = 'https://';
 
     public static function getPaywallUrl() : string {
-        if(SELECTED_BLINK_ENVIRONMENT == 'production') {
+        if(defined('SELECTED_BLINK_ENVIRONMENT') && SELECTED_BLINK_ENVIRONMENT == 'production') {
             return self::HTTPS . self::DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
         }
         return self::HTTPS . 'qa.' . self::DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
@@ -69,7 +69,7 @@ class Constants
     }
 
     public static function getApiUrl() : string {
-        if(SELECTED_BLINK_ENVIRONMENT == 'production') {
+        if(defined('SELECTED_BLINK_ENVIRONMENT') && SELECTED_BLINK_ENVIRONMENT == 'production') {
             return self::HTTPS . 'api.' . self::DOMAIN;
         }
         return self::HTTPS . 'api.'. 'qa.' . self::DOMAIN;
