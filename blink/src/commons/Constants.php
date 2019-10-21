@@ -33,6 +33,7 @@ class Constants
     const CONFIGURE_MERCHANT_POST_HANDLER = '__blink_configure_merchant_post_handler';
     const CONFIGURE_MERCHANT_EMAIL_FIELD = '__blink_configure_merchant_email_field';
     const CONFIGURE_MERCHANT_PASSWORD_FIELD = '__blink_configure_merchant_password_field';
+    const CONFIGURE_MERCHANT_ENVIRONMENT_FIELD = '__blink_configure_merchant_environment_field';
 
     //--------------------------- Database Objects --------------------------------------
     // DATABASE
@@ -44,7 +45,6 @@ class Constants
     const DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE = '__blink_default_article_price';
     const DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE = '__blink_default_currency_iso_code';
 
-
     // --------------------------- File Handlers -----------------------------------------
     const JS_FILE_HANDLE = 'blink-javascript-handle';
 
@@ -53,6 +53,7 @@ class Constants
     const USD_CURRENCY_MULTIPLIER = 10000 * 100;
     const DEFAULT_USD_CONTENT_PRICE = 1.5 ;
 
+    const ENVIRONMENTS = array('Production','Test');
     const DOMAIN = 'demopaywall.com/';
     const PAYWALL_VERSION = '1.0/';
     const PAYWALL_FILE = 'blink-sdk.js';
@@ -60,10 +61,17 @@ class Constants
     const HTTPS = 'https://';
 
     public static function getPaywallUrl() : string {
+        if(SELECTED_BLINK_ENVIRONMENT == 'production') {
+            return self::HTTPS . self::DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
+        }
         return self::HTTPS . 'qa.' . self::DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
+
     }
 
     public static function getApiUrl() : string {
+        if(SELECTED_BLINK_ENVIRONMENT == 'production') {
+            return self::HTTPS . 'api.' . self::DOMAIN;
+        }
         return self::HTTPS . 'api.'. 'qa.' . self::DOMAIN;
     }
 }

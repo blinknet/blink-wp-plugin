@@ -22,6 +22,19 @@
                 />
             </td>
         </tr>
+        <tr valign="top">
+            <th scope="row">Environment</th>
+            <td>
+                <select name="<?php echo Blink\Constants::CONFIGURE_MERCHANT_ENVIRONMENT_FIELD; ?>">
+                    <?php
+                    foreach (Blink\Constants::ENVIRONMENTS as $env) { ?>
+                        <option value="<?php echo $env ?>" <?php
+                        ?>><?php echo $env ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </td>
+        </tr>
     </table>
     <input type="submit" name="submit" value="submit" class="button button-primary">
 </form>

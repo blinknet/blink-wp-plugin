@@ -1,10 +1,20 @@
 <h4>General Settings</h4>
-<div>
-    <div>Public Key</div>
-    <div style="width: 40%;"
-    ><?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_MERCHANT_PUBLIC_KEY)); ?>
-    </div>
-</div>
+<table class="form-table">
+
+    <tr valign="top">
+        <th scope="row">Public Key</th>
+        <td>
+            <div style="
+            display: inline-block;
+            padding: 10px;
+            background-color: #e2e2e2;
+            border-radius: 5px;
+            ">
+            <?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_MERCHANT_PUBLIC_KEY)); ?>
+            </div>
+        </td>
+    </tr>
+</table>
 
 <form method="post" action="options.php">
     <?php settings_fields(Blink\Constants::DATABASE_OPTIONS_SETTINGS_GROUP); ?>
