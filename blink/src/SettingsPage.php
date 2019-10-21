@@ -89,10 +89,18 @@ class SettingsPage
         }
         $email = sanitize_text_field($_POST[Constants::CONFIGURE_MERCHANT_EMAIL_FIELD]);
         $password = sanitize_text_field($_POST[Constants::CONFIGURE_MERCHANT_PASSWORD_FIELD]);
+        $environment = sanitize_text_field($_POST[Constants::CONFIGURE_MERCHANT_ENVIRONMENT_FIELD]);
 
-        if (empty($email) || empty($password)) {
+        if (empty($email) || empty($password) || empty($environment)) {
             exit;
         }
+        /**
+         * Using "define('MY_VAR', 'default value')" INSIDE a class definition does not work as expected.
+         * You have to use the PHP keyword 'const' and initialize it with a scalar value -- boolean, int, float, string.
+         * SELECTED_BLINK_ENVIRONMENT will not be available as a global variable in other contexts.
+         */
+        if ( !defined( 'SELECTED_BLINK_ENVIRONMENT' ) )
+            define( 'SELECTED_BLINK_ENVIRONMENT', strtolower($environment) );
 
         $loginToken = Api::login($email, $password);
         if ($loginToken === FALSE) {

@@ -32,35 +32,22 @@ function addJavascriptIntegrationToPage()
 {
     global $post;
 
+    if(is_admin()|| empty($post)){
+        return;
+    }
     // Add the CUSTOM content management functions
     wp_enqueue_script(Constants::JS_FILE_HANDLE, BLINK_PLUGIN_ROOT_URL . 'src/example/JsIntegration.js');
 
     // Check if a signed payment for the post being accessed exists
     $paymentInfo = get_post_meta($post->ID, Constants::ARTICLE_RESOURCE_PAYMENT_INFO_METADATA_KEY, true);
     if (empty($paymentInfo)) {
-        // if no  payment information exist check if the private key is set
-        $private_key = get_option(Constants::DATABASE_OPTIONS_MERCHANT_PRIVATE_KEY);
-        if (empty($private_key)) {
-            // if the private key does not exist yet in the database disable the custom content management functions
-            wp_localize_script(Constants::JS_FILE_HANDLE, 'blink_plugin',
-                array(
-                    'status' => 'disabled',
-                )
-            );
-            return;
-        }
-        // If no payment information exist for the post being accessed BUT the private key exist
-        // create a payment information for that post using the default merchant price
-        $currency_iso_code = get_option(Constants::DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE);
-        $default_article_price = get_option(Constants::DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE);
-        $paymentInfo = DatabaseUtils::createOrUpdatePaymentInformation(
-            $post->ID,
-            $default_article_price,
-            $currency_iso_code,
-            $private_key,
-            get_the_title(),
-            get_permalink($post->ID)
+        // Disable if no payment info exists
+        wp_localize_script(Constants::JS_FILE_HANDLE, 'blink_plugin',
+            array(
+                'status' => 'disabled',
+            )
         );
+        return;
     }
 
     // Using the just create payment information, add it to the custom content management file

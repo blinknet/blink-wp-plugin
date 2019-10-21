@@ -43,29 +43,56 @@ class ArticleConfigurationDropdown
                 return;
             }
             $current_price = get_option(Constants::DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE);
+
             $currency_iso_code = get_option(Constants::DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE);
             $paymentInfo = DatabaseUtils::createOrUpdatePaymentInformation(
-                    $post->ID,
-                    $current_price,
-                    $currency_iso_code,
-                    $private_key,
-                    get_the_title(),
-                    get_permalink($post->ID)
+                $post->ID,
+                $current_price,
+                $currency_iso_code,
+                $private_key,
+                get_the_title(),
+                get_permalink($post->ID),
+                Crypto\Utils::sha256($post->guid),
             );
             // used in the page render
             $current_resource_id = json_decode($paymentInfo)->resourceId;
+            $defaultArticlePrice = $current_price;
+
+            $hasDefaultPrice = "true";
+            update_post_meta(
+                $post->ID,
+                Constants::ARTICLE_PAYMENT_HAS_DEFAULT_PRICE,
+                $hasDefaultPrice,
+            );
+
         } else {
-            if (array_key_exists("resourceId", $paymentInfo)) {
-                $current_resource_id = $paymentInfo['resourceId'];
-                if (empty($current_resource_id)) {
-                    $current_resource_id = Utils::generateUniqueResourceId();
+            $need_update = FALSE;
+            $hasDefaultPrice = get_post_meta($post->ID, Constants::ARTICLE_PAYMENT_HAS_DEFAULT_PRICE, true);
+            $defaultArticlePrice = get_option(Constants::DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE);
+            if($hasDefaultPrice == "true") {
+                $defaultArticlePriceAsInt = (int)($defaultArticlePrice * Constants::USD_CURRENCY_MULTIPLIER);
+                if ($defaultArticlePriceAsInt != $paymentInfo['amount']) {
+                    $currencyIsoCode = get_option(Constants::DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE);
+                    $privateKey = get_option(Constants::DATABASE_OPTIONS_MERCHANT_PRIVATE_KEY);
+                    $paymentInfo = DatabaseUtils::createOrUpdatePaymentInformation(
+                        $post->ID,
+                        $defaultArticlePrice,
+                        $currencyIsoCode,
+                        $privateKey,
+                        get_the_title(),
+                        get_permalink($post->ID),
+                        Crypto\Utils::sha256($post->guid),
+                        );
+                    $need_update = TRUE;
                 }
             }
-            if (array_key_exists("amount", $paymentInfo)) {
+
+            if($need_update === FALSE ){
+                $current_resource_id = $paymentInfo['resourceId'];
                 $current_price = $paymentInfo['amount'] / (Constants::USD_CURRENCY_MULTIPLIER);
-                if (empty($current_price)) {
-                    $current_price = get_option(Constants::DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE);
-                }
+            } else {
+                $current_resource_id = json_decode($paymentInfo)->resourceId;
+                $current_price = json_decode($paymentInfo)->amount / (Constants::USD_CURRENCY_MULTIPLIER);;
             }
         }
         // Render
@@ -95,23 +122,40 @@ class ArticleConfigurationDropdown
             return;
         }
         $currency_iso_code = get_option(Constants::DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE);
+
         $paymentInfo = json_decode(get_post_meta(
             $post_id,
             Constants::ARTICLE_RESOURCE_PAYMENT_INFO_METADATA_KEY,
             true
         ), true);
 
-        $sanitizedArticlePrice = sanitize_text_field($_POST[Constants::ARTICLE_PRICE_INPUT_NAME]);
+        $articleShouldUseDefaultPrice = sanitize_text_field($_POST[Constants::ARTICLE_USE_DEFAULT_PRICE]);
+        $articlePrice = get_option(Constants::DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE);
+
+        if(empty($articleShouldUseDefaultPrice)) {
+            $articlePrice = sanitize_text_field($_POST[Constants::ARTICLE_PRICE_INPUT_NAME]);
+            update_post_meta(
+                $post_id,
+                Constants::ARTICLE_PAYMENT_HAS_DEFAULT_PRICE,
+                "false",
+            );
+        } else {
+            update_post_meta(
+                $post_id,
+                Constants::ARTICLE_PAYMENT_HAS_DEFAULT_PRICE,
+                "true",
+            );
+        }
 
         DatabaseUtils::createOrUpdatePaymentInformation(
-                $post_id,
-                $sanitizedArticlePrice,
-                $currency_iso_code,
-                $private_key,
-                get_the_title(),
-                get_permalink($post_id),
-                $paymentInfo['resourceId'],
-        );
+            $post_id,
+            $articlePrice,
+            $currency_iso_code,
+            $private_key,
+            get_the_title(),
+            get_permalink($post_id),
+            $paymentInfo['resourceId'],
+            );
 
     }
 }
