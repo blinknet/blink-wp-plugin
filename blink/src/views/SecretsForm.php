@@ -1,4 +1,3 @@
-<h4>Configure secrets</h4>
 <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" id="nds_add_user_meta_form">
     <input type="hidden" name="action" value="login_and_setup_secrets">
     <?php wp_nonce_field(

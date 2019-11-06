@@ -3,7 +3,7 @@
 Plugin Name: Blink
 Description: Integration with Blink. Adds the core content management features.
 Author: Blink Ledger Systems Inc.
-Author URI: https://blinkpass.com
+Author URI: https://blink.net
 Version: 0.1.0
 */
 
@@ -18,6 +18,7 @@ function includePluginFiles()
     if ( !defined( 'BLINK_PLUGIN_ROOT_URL' ) )
         define( 'BLINK_PLUGIN_ROOT_URL', plugin_dir_url(__FILE__) );
     include($BLINK_PLUGIN_FOLDER_PATH . 'src/SettingsPage.php');
+    include($BLINK_PLUGIN_FOLDER_PATH . 'src/SettingsPageSecretsHandler.php');
 
     // Add custom meta box on add/edit posts page
     include($BLINK_PLUGIN_FOLDER_PATH . 'src/ArticleConfigurationDropdown.php');
