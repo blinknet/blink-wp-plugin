@@ -35,5 +35,5 @@
             </td>
         </tr>
     </table>
-    <input type="submit" name="submit" value="submit" class="button button-primary">
+    <input type="submit" name="submit" value="Activate" class="button button-primary">
 </form>

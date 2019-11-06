@@ -1,5 +1,7 @@
 <h3 style="margin-top: 40px;">
-    <?php echo "Configured plugin running on the " . esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT)) . " environment."; ?>
+    Configured plugin running on the <span
+            style=" background-color: #e2e2e2; border-radius: 5px; padding: 4px; text-align: center; color:#1B7E8C ">
+        <?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT))?></span> environment.
 </h3>
 <table class="form-table">
 

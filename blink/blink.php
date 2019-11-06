@@ -1,10 +1,11 @@
 <?php
 /*
 Plugin Name: Blink
-Description: Integration with Blink. Adds the core content management features.
+Description: The future of online news. Blink provides single log-in across publications, seamless payments for articles and one-click subscriptions. Explore and support the best journalism quality journalism.
 Author: Blink Ledger Systems Inc.
+Requires PHP: 7.3
 Author URI: https://blink.net
-Version: 0.1.0
+Version: 1.0.0
 */
 
 
