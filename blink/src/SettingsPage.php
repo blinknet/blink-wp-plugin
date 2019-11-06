@@ -3,7 +3,6 @@
 namespace Blink;
 defined('ABSPATH') or die;
 
-use Blink\Crypto\Utils;
 
 class SettingsPage
 {
@@ -25,7 +24,9 @@ class SettingsPage
             self::menuTitle,
             self::pagePermissions,
             self::pageUUID,
-            array(self::class, 'render'));
+            array(self::class, 'render'),
+            "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSItMTAgLTIuNSA0MCA0MCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgICAgICAgICAgPGcgaWQ9IlN5bWJvbHMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgICAgICAgICAgPGcgaWQ9IndhbGxldCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI0LjAwMDAwMCwgLTExLjAwMDAwMCkiIGZpbGw9IiNGRkZGRkYiIGZpbGwtcnVsZT0ibm9uemVybyI+CiAgICAgICAgICAgICAgICAgICAgPHBvbHlnb24gaWQ9IlBhdGgiIHBvaW50cz0iMjkuNiA0NS43NDk5OTEgNDQgMjUuMzQ5OTg3IDM0LjQgMjUuMzQ5OTg3IDM4LjggMTEuNzQ5ODk5IDI0IDMxLjc0OTk5MSAzMy42IDMxLjc0OTk5MSI+PC9wb2x5Z29uPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9zdmc+"
+        );
 
         // Add settings form fields in database
         add_action('admin_init', array(self::class, 'addOptionsToDatabase'));
@@ -41,10 +42,6 @@ class SettingsPage
             Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
             Constants::DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE
         );
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE
-        );
     }
 
     /**
@@ -54,8 +51,8 @@ class SettingsPage
     {
         ?>
         <div class="wrap">
-            <h1>Blink Settings</h1>
             <?php
+            include(plugin_dir_path(__FILE__) . 'views/BlinkLogo.php');
             $privateKey = get_option(Constants::DATABASE_OPTIONS_MERCHANT_PRIVATE_KEY);
             if (empty($privateKey)) {
                 include(plugin_dir_path(__FILE__) . 'views/SecretsForm.php');
@@ -66,76 +63,6 @@ class SettingsPage
         </div>
         <?php
     }
-
-    static function setupSecretsHandler()
-    {
-        // set location header to return to previous page on submit
-        header("Location: {$_SERVER['HTTP_REFERER']}");
-
-        // check if the post request is coming from admin page
-        if (!isset($_POST[Constants::CONFIGURE_MERCHANT_POST_NONCE]) ||
-            !wp_verify_nonce(
-                $_POST[Constants::CONFIGURE_MERCHANT_POST_NONCE],
-                Constants::CONFIGURE_MERCHANT_POST_HANDLER
-            )
-        ) {
-            return;
-        }
-
-        // check if email and password exist in the form submit request
-        if (!isset($_REQUEST[Constants::CONFIGURE_MERCHANT_EMAIL_FIELD]) ||
-            !isset($_REQUEST[Constants::CONFIGURE_MERCHANT_PASSWORD_FIELD])) {
-            return;
-        }
-        $email = sanitize_text_field($_POST[Constants::CONFIGURE_MERCHANT_EMAIL_FIELD]);
-        $password = sanitize_text_field($_POST[Constants::CONFIGURE_MERCHANT_PASSWORD_FIELD]);
-        $environment = sanitize_text_field($_POST[Constants::CONFIGURE_MERCHANT_ENVIRONMENT_FIELD]);
-
-        if (empty($email) || empty($password) || empty($environment)) {
-            exit;
-        }
-        /**
-         * Using "define('MY_VAR', 'default value')" INSIDE a class definition does not work as expected.
-         * You have to use the PHP keyword 'const' and initialize it with a scalar value -- boolean, int, float, string.
-         * SELECTED_BLINK_ENVIRONMENT will not be available as a global variable in other contexts.
-         */
-        if ( !defined( 'SELECTED_BLINK_ENVIRONMENT' ) )
-            define( 'SELECTED_BLINK_ENVIRONMENT', strtolower($environment) );
-
-        $loginToken = Api::login($email, $password);
-        if ($loginToken === FALSE) {
-            return;
-        }
-
-        // Generate random key pair ed25519 signing pair
-        $merchant_key_pair = sodium_crypto_sign_keypair();
-        $merchant_private_key = bin2hex(sodium_crypto_sign_secretkey($merchant_key_pair));
-        $merchant_public_key = bin2hex(sodium_crypto_sign_publickey($merchant_key_pair));
-        $merchant_id = Api::postPublicKey(
-            $merchant_public_key,
-            Utils::signMessage($merchant_public_key, $merchant_private_key),
-            $loginToken
-        );
-        if ($merchant_id === FALSE) {
-            //TODO(Mike) Send admin notification
-            return;
-        }
-        update_option(Constants::DATABASE_OPTIONS_MERCHANT_PRIVATE_KEY, $merchant_private_key);
-        update_option(Constants::DATABASE_OPTIONS_MERCHANT_PUBLIC_KEY, $merchant_public_key);
-        update_option(Constants::DATABASE_OPTIONS_MERCHANT_ID, $merchant_id);
-
-        $default_article_price = get_option(Constants::DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE);
-        if (empty($default_article_price)) {
-            update_option(Constants::DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE, Constants::DEFAULT_USD_CONTENT_PRICE);
-        }
-        $default_currency = get_option(Constants::DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE);
-        if (empty($default_currency)) {
-            update_option(Constants::DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE, 'usd');
-        }
-        // return to the caller page
-        exit;
-    }
 }
 
 add_action('admin_menu', array('Blink\SettingsPage', 'addToMenu'));
-add_action('admin_post_login_and_setup_secrets', array('Blink\SettingsPage', 'setupSecretsHandler'));

@@ -43,35 +43,40 @@ class Constants
     const DATABASE_OPTIONS_MERCHANT_PUBLIC_KEY = '__blink_public_key';
     const DATABASE_OPTIONS_MERCHANT_ID = '__blink_merchant_id';
     const DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE = '__blink_default_article_price';
-    const DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE = '__blink_default_currency_iso_code';
+    const DATABASE_OPTIONS_DEFAULT_CURRENCY_ISO_CODE = '__blink_currency_iso_code';
+
+
+    const DATABASE_OPTIONS_RUNNING_ENVIRONMENT = '__blink_selected_running_environment';
 
     // --------------------------- File Handlers -----------------------------------------
     const JS_FILE_HANDLE = 'blink-javascript-handle';
 
     //--------------------------- General Settings  --------------------------------------
-    const ACCEPTED_CURRENCY_ISO_CODES = array('usd');
     const USD_CURRENCY_MULTIPLIER = 10000 * 100;
-    const DEFAULT_USD_CONTENT_PRICE = 1.5 ;
+    const DEFAULT_CONTENT_PRICE = 1.5 ;
 
-    const ENVIRONMENTS = array('Production','Test');
-    const DOMAIN = 'demopaywall.com/';
+    const ENVIRONMENTS = array('Live','Test');
+    const TESTING_DOMAIN = 'demopaywall.com/';
+    const PRODUCTION_DOMAIN = 'blink.net/';
     const PAYWALL_VERSION = '1.0/';
     const PAYWALL_FILE = 'blink-sdk.js';
 
     const HTTPS = 'https://';
 
     public static function getPaywallUrl() : string {
-        if(defined('SELECTED_BLINK_ENVIRONMENT') && SELECTED_BLINK_ENVIRONMENT == 'production') {
-            return self::HTTPS . self::DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
+        $selected_environment = get_option(Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT);
+        if(!empty($selected_environment) && $selected_environment == 'live') {
+            return self::HTTPS . self::PRODUCTION_DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
         }
-        return self::HTTPS . 'qa.' . self::DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
+        return self::HTTPS . 'qa.' . self::TESTING_DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
 
     }
 
     public static function getApiUrl() : string {
-        if(defined('SELECTED_BLINK_ENVIRONMENT') && SELECTED_BLINK_ENVIRONMENT == 'production') {
-            return self::HTTPS . 'api.' . self::DOMAIN;
+        $selected_environment = get_option(Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT);
+        if(!empty($selected_environment) && $selected_environment == 'live') {
+            return self::HTTPS . 'api.' . self::PRODUCTION_DOMAIN;
         }
-        return self::HTTPS . 'api.'. 'qa.' . self::DOMAIN;
+        return self::HTTPS . 'api.'. 'qa.' . self::TESTING_DOMAIN;
     }
 }

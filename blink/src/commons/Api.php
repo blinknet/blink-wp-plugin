@@ -16,6 +16,7 @@ class Api
     // Endpoints
     private const loginEndpoint = 'users/login/';
     private const postPublicKeyEndpoint = "merchants/credentials/";
+    private const merchantProfile = "merchants/me/";
 
     /**
      * Login the user and return the a bearer token.
@@ -57,7 +58,17 @@ class Api
             return FALSE;
         }
         $response = json_decode($response);
-        return $response->merchant;
+        return $response;
+    }
+
+    public static function getMerchantProfile($loginToken)
+    {
+        $response = self::get(self::merchantProfile, $loginToken);
+        if ($response === FALSE) {
+            return FALSE;
+        }
+        $response = json_decode($response);
+        return $response;
     }
 
     //-------- Helper functions --------
@@ -100,13 +111,18 @@ class Api
         return $response;
     }
 
-    private static function get($endpoint, $paramArray = null) {
+    private static function get($endpoint, $loginToken = null, $paramArray = null) {
         $curl_url =  Constants::getApiUrl() . $endpoint;
         if(!empty($paramArray)) {
             $curl_url = $curl_url . "?" . http_build_query($paramArray);
         }
         $curl = curl_init($curl_url);
+        $headerArray = array();
+        if ($loginToken != null) {
+            array_push($headerArray, self::buildAuthHeader($loginToken));
+        }
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headerArray);
         $response = curl_exec($curl);
         curl_close($curl);
         return $response;
