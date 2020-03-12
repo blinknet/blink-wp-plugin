@@ -135,8 +135,8 @@ Should be called when the user clicks on “Subscribe” on the publisher’s we
 
 
 # URLS:
-* Front: https://qa.demopaywall.com
-* API: https://api.qa.demopaywall.com
+* Front: https://qa.blink.net
+* API: https://api.qa.blink.net
 * Demo website: https://qa.blinktimes.com/
 * Second demo website: https://qa.blinkstreetjournal.com
 
