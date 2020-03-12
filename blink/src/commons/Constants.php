@@ -56,7 +56,7 @@ class Constants
     const DEFAULT_CONTENT_PRICE = 1.5 ;
 
     const ENVIRONMENTS = array('Live','Test');
-    const TESTING_DOMAIN = 'demopaywall.com/';
+    const TESTING_DOMAIN = 'blink.net/';
     const PRODUCTION_DOMAIN = 'blink.net/';
     const PAYWALL_VERSION = '1.0/';
     const PAYWALL_FILE = 'blink-sdk.js';
