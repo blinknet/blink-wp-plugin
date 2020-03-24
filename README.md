@@ -23,6 +23,8 @@ The Blink SDK will insert an `<iframe>` in this div, containing the paywall.
 The Blink SDK is a javascript file that provides integration with the Blink wallet.
 
 When loaded, it will set a “blinkSDK” property on the window object.
+## SDK Methods
+* [init(options)](#rightarrow-initoptions)
 
 ### The SDK object has the following API:
 ### &rightarrow; init(options)
@@ -39,6 +41,16 @@ options (Object)
 ```javascript
 blinkSDK.init({clientId: 1});
 ```
+
+### &rightarrow; isInitialized()
+
+Checks if the SDK has been initialized.
+
+**Parameters**: `none`
+
+**Returns**: `bool`
+
+
 ### &rightarrow; requestPayment(request , callback, errorCallback)
 Request payment for an article, should be called after the page loads.
 
@@ -116,7 +128,7 @@ let isUserSubscribed = blinkSDK.isSubscribed()
 ```
 
 ### &rightarrow; onSubscriptionChange(callback: (subscription) => void)
-Register a callback for changes in a users valid subscription.
+Register a callback for changes in a user's valid subscription.
 **Parameters**:
 ```javascript
 callback (Function)
@@ -133,6 +145,25 @@ callback (Function)
     └── offerId            (str)
  ```
 **Returns**: `void`
+
+### &rightarrow;  getSubscription()
+
+Get a user's valid subscription if the user is authenticated and has a valid subscription.
+**Parameters**: `none`
+
+**Returns**: 
+
+    subscription (Object | null)
+    ├── id                 (str)
+    ├── deliveryAddressId  (str | null)
+    ├── blinkSignature     (hex, str)
+    ├── userId             (str)
+    ├── amount             (int)
+    ├── createdAt          (iso date str)
+    ├── canceledAt         (iso date str | null)
+    ├── nextPaymentAttempt (iso date str | null)
+    ├── currencyCode       (str | null)
+    └── offerId            (str)
 
 ### &rightarrow; promptSubscriptionPopup()
 Prompt the subscription page in the wallet iframe. 
