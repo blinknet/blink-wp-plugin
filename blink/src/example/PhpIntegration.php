@@ -1,10 +1,9 @@
 <?php
 
-use Blink\Commons\DatabaseUtils;
 use Blink\Constants;
 
 /**
- * Add the javascript widget file to the page.
+ * Add the blinkSDK javascript file to the page.
  */
 function addBlinkWidgetToPage()
 {
@@ -15,8 +14,8 @@ function addBlinkWidgetToPage()
 }
 
 /**
- * Append somewhere in the content a div where with the id `blink-container` where the paywall
- * will be inserted by the blinkSDK.
+ * Append somewhere in the content a div where with the id `blink-container`
+ * where the paywall will be inserted by the blinkSDK.
  */
 function addBlinkContainerToContent($content)
 {
@@ -28,6 +27,11 @@ function addBlinkContainerToContent($content)
     return $content . $blinkContainer;
 }
 
+/**
+ * Fetch the clientId and the current payment information for the post from the database.
+ * Then add them to the integration javascript file.
+ * In this examples the variables are nested in the `integration` object.
+ */
 function addJavascriptIntegrationToPage()
 {
     global $post;
@@ -40,79 +44,19 @@ function addJavascriptIntegrationToPage()
 
     // Check if a signed payment for the post being accessed exists
     $paymentInfo = get_post_meta($post->ID, Constants::ARTICLE_RESOURCE_PAYMENT_INFO_METADATA_KEY, true);
-    if (empty($paymentInfo)) {
-        // Disable if no payment info exists
-        wp_localize_script(Constants::JS_FILE_HANDLE, 'blink_plugin',
-            array(
-                'status' => 'disabled',
-            )
-        );
-        return;
-    }
+    // Add the merchant ID inside the javascript file, need to call blinkSDK.init()
+    $merchantId = get_option(Constants::DATABASE_OPTIONS_MERCHANT_ID);
 
     // Using the just create payment information, add it to the custom content management file
-    wp_localize_script(Constants::JS_FILE_HANDLE, 'post_metadata',
+    wp_localize_script(Constants::JS_FILE_HANDLE, 'integration',
         array(
-            'post_id' => $post->ID,
             'paymentInfo' => json_decode($paymentInfo),
-            'encodedPaymentInfo' => base64_encode($paymentInfo)
+            'clientId' => (int)$merchantId
         )
     );
-    // Add the merchant ID inside the javascript file, need to call blinkSDK.setOptions()
-    $merchantId = get_option(Constants::DATABASE_OPTIONS_MERCHANT_ID);
-    $data = array(
-        'meta' => array(//array nested to protect boolean and integer values
-            'publisher_id' => (int)$merchantId
-        ),
-    );
-    wp_localize_script(Constants::JS_FILE_HANDLE, 'publisher', $data);
-
 }
-
-/**
- * Initialize the Blink widget or add the initialize function to an event listener.
- * The event `blinkPaywallLoaded` will be dispatched when the script added with @see addBlinkWidgetToPage
- * will be loaded in the browser.
- */
-function initializeMerchant()
-{
-    ob_start();
-    ?>
-    <script>
-        if (window.blinkSDK) {
-            initializeWidget()
-        } else {
-            window.addEventListener('blinkPaywallLoaded', initializeWidget, false);
-        }
-    </script>
-    <?php
-}
-
-/**
- * Add a script to the web page where we request a payment if the SDK exists and isInitialized.
- * If any of the previous conditions are not met the payment request will be added to an event listener.
- * The event `blinkPaywallInitialized` will be dispatched when widget iframe is loaded.
- */
-function addAutoPayScripToContent($content)
-{
-    ob_start();
-    ?>
-    <script>
-        if (window.blinkSDK && window.blinkSDK.isInitialized()) {
-            payForContent()
-        } else {
-            window.addEventListener('blinkPaywallInitialized', payForContent, false);
-        }
-    </script>
-    <?php
-    $auto_pay = ob_get_clean();
-    return $content . $auto_pay;
-}
-
 
 // Wordpress hooks
 add_action('wp_enqueue_scripts', 'addBlinkWidgetToPage');
 add_filter('the_content', 'addBlinkContainerToContent');
 add_action('wp_enqueue_scripts', 'addJavascriptIntegrationToPage');
-add_action('wp_head', 'initializeMerchant');
-add_filter('the_content', 'addAutoPayScripToContent');

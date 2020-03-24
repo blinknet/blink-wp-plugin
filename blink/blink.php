@@ -41,8 +41,12 @@ function includePluginFiles()
     // Import payment generator
     include($BLINK_PLUGIN_FOLDER_PATH . 'src/PaymentInfoGenerator.php');
 
-    //TODO | Uncomment to show example integration
-//        include($BLINK_PLUGIN_FOLDER_PATH . 'src/example/PhpIntegration.php');
+    /**
+     * @example `src/example/PhpIntegration.php`  Demo integration in the php backend
+     * @example `src/example/JsIntegration`       Demo of blinkSDK api calls and placeholder for content management
+     */
+//    @todo Uncomment to include example integration
+//    include($BLINK_PLUGIN_FOLDER_PATH . 'src/example/PhpIntegration.php');
 }
 
 add_action( 'plugins_loaded', 'includePluginFiles');

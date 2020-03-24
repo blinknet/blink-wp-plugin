@@ -63,6 +63,11 @@ class Constants
 
     const HTTPS = 'https://';
 
+    /**
+     * Returns the BlinkSDK javascript file url.
+     * @api
+     * @return string
+     */
     public static function getPaywallUrl() : string {
         $selected_environment = get_option(Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT);
         if(!empty($selected_environment) && $selected_environment == 'live') {
@@ -72,6 +77,11 @@ class Constants
 
     }
 
+    /**
+     * Build the Blink API url.
+     * @internal
+     * @return string
+     */
     public static function getApiUrl() : string {
         $selected_environment = get_option(Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT);
         if(!empty($selected_environment) && $selected_environment == 'live') {
