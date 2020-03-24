@@ -166,8 +166,8 @@ Get a user's valid subscription if the user is authenticated and has a valid sub
 **Parameters**: `none`
 
 **Returns**: 
-
-    subscription (Object | null)
+```javascript
+subscription (Object | null)
     ├── id                 (str)
     ├── deliveryAddressId  (str | null)
     ├── blinkSignature     (hex, str)
@@ -178,7 +178,7 @@ Get a user's valid subscription if the user is authenticated and has a valid sub
     ├── nextPaymentAttempt (iso date str | null)
     ├── currencyCode       (str | null)
     └── offerId            (str)
-
+```
 <a name="promptSubscriptionPopup"></a>
 ### &rightarrow; promptSubscriptionPopup()
 Prompt the subscription page in the wallet iframe. 
