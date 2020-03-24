@@ -24,7 +24,9 @@ The Blink SDK is a javascript file that provides integration with the Blink wall
 
 When loaded, it will set a “blinkSDK” property on the window object.
 ## SDK Methods
-* [init(options)](#rightarrow-initoptions)
+* [init](#rightarrow-initoptions)
+* [isInitialized](#rightarrow-isinitialized)
+* [promptDonationPopup](#rightarrow-promptdonationpopup)
 
 ### The SDK object has the following API:
 ### &rightarrow; init(options)
