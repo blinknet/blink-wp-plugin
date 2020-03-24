@@ -36,8 +36,8 @@ When loaded, it will set a “blinkSDK” property on the window object.
 * [promptDonationPopup](#promptdonationpopup)
 
 ### The SDK object has the following API:
-### &rightarrow; init(options)
 <a name="initoptions"></a> 
+### &rightarrow; init(options)
 Configure the SDK, should be the first function called.
 
 **Parameters**:
@@ -52,16 +52,16 @@ options (Object)
 blinkSDK.init({clientId: 1});
 ```
 
-### &rightarrow; isInitialized()
 <a name="isinitialized"></a>
+### &rightarrow; isInitialized()
 Checks if the SDK has been initialized.
 
 **Parameters**: `none`
 
 **Returns**: `bool`
 
-### &rightarrow; requestPayment(request , callback, errorCallback)
 <a name="requestPayment"></a>
+### &rightarrow; requestPayment(request , callback, errorCallback)
 Request payment for an article, should be called after the page loads.
 
 **Parameters**:
@@ -89,8 +89,8 @@ Request payment for an article, should be called after the page loads.
 blinkSDK.requestPayment(paymentInfo, successCallback, errorCallback);
 ```
 
-### &rightarrow; isAuthenticated()
 <a name="isAuthenticated"></a>
+### &rightarrow; isAuthenticated()
 Checks if the user is authenticated.
 
 **Parameters**: `none`
@@ -102,8 +102,8 @@ Checks if the user is authenticated.
 let userStatus = blinkSDK.isAuthenticated()
 ```
 
-### &rightarrow; onAuthenticationChange(callback: ({authenticated}) => void)
 <a name="onAuthenticationChange"></a>
+### &rightarrow; onAuthenticationChange(callback: ({authenticated}) => void)
 Register a callback for changes in authentication status.
 
 **Parameters**:
@@ -127,8 +127,8 @@ blinkSDK.onAuthenticationChange(({authenticated}) => {
 })
 ```
 
-### &rightarrow; isSubscribed()
 <a name="isSubscribed"></a>
+### &rightarrow; isSubscribed()
 Checks if the user is subscribed.
 
 **Parameters**: `none`
@@ -140,8 +140,8 @@ Checks if the user is subscribed.
 let isUserSubscribed = blinkSDK.isSubscribed()
 ```
 
-### &rightarrow; onSubscriptionChange(callback: (subscription) => void)
 <a name="onSubscriptionChange"></a>
+### &rightarrow; onSubscriptionChange(callback: (subscription) => void)
 Register a callback for changes in a user's valid subscription.
 **Parameters**:
 ```javascript
@@ -160,8 +160,8 @@ callback (Function)
  ```
 **Returns**: `void`
 
-### &rightarrow;  getSubscription()
 <a name="getSubscription"></a>
+### &rightarrow;  getSubscription()
 Get a user's valid subscription if the user is authenticated and has a valid subscription.
 **Parameters**: `none`
 
@@ -179,8 +179,8 @@ Get a user's valid subscription if the user is authenticated and has a valid sub
     ├── currencyCode       (str | null)
     └── offerId            (str)
 
-### &rightarrow; promptSubscriptionPopup()
 <a name="promptSubscriptionPopup"></a>
+### &rightarrow; promptSubscriptionPopup()
 Prompt the subscription page in the wallet iframe. 
 
 Should be called when the user clicks on “Subscribe” on the publisher’s website.
@@ -189,8 +189,8 @@ Should be called when the user clicks on “Subscribe” on the publisher’s we
 
 **Returns**: `void`
 
-### &rightarrow; promptDonationPopup()
 <a name="promptDonationPopup"></a>
+### &rightarrow; promptDonationPopup()
 Prompt the donation page in the wallet iframe.
 
 Should be called when the user clicks on “Donate” on the publisher’s website.
