@@ -24,12 +24,12 @@ The Blink SDK is a javascript file that provides integration with the Blink wall
 
 When loaded, it will set a “blinkSDK” property on the window object.
 ## SDK Methods
-* [init](#rightarrow-initoptions)
-* [isInitialized](#rightarrow-isinitialized)
-* [promptDonationPopup](#rightarrow-promptdonationpopup)
+* [init](#initoptions)
+* [isInitialized](#isinitialized)
+* [promptDonationPopup](#promptdonationpopup)
 
 ### The SDK object has the following API:
-### &rightarrow; init(options)
+### <a name="initoptions"></a> &rightarrow; init(options)
 Configure the SDK, should be the first function called.
 
 **Parameters**:
@@ -44,7 +44,7 @@ options (Object)
 blinkSDK.init({clientId: 1});
 ```
 
-### &rightarrow; isInitialized()
+###<a name="isinitialized"></a> &rightarrow; isInitialized()
 
 Checks if the SDK has been initialized.
 
@@ -176,7 +176,7 @@ Should be called when the user clicks on “Subscribe” on the publisher’s we
 
 **Returns**: `void`
 
-### &rightarrow; promptDonationPopup()
+###<a name="promptDonationPopup"></a> &rightarrow; promptDonationPopup()
 
 Prompt the donation page in the wallet iframe.
 
