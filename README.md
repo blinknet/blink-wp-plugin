@@ -25,19 +25,19 @@ The Blink SDK is a javascript file that provides integration with the Blink wall
 When loaded, it will set a “blinkSDK” property on the window object.
 
 ### The SDK object has the following API:
-### &rightarrow; setOptions(options)
+### &rightarrow; init(options)
 Configure the SDK, should be the first function called.
 
 **Parameters**:
 ```javascript
 options (Object)
-└── publisherDomainId (int)
+└── clientId (int)
  ```
 **Returns**: `void`
 
 **Example**
 ```javascript
-blinkSDK.setOptions({publisherDomainId: 1});
+blinkSDK.init({clientId: 1});
 ```
 ### &rightarrow; requestPayment(request , callback, errorCallback)
 Request payment for an article, should be called after the page loads.
@@ -115,12 +115,22 @@ Checks if the user is subscribed.
 let isUserSubscribed = blinkSDK.isSubscribed()
 ```
 
-### &rightarrow; onSubscriptionStatusChange(callback: ({subscribed}) => void)
-Register a callback for changes in subscription status.
+### &rightarrow; onSubscriptionChange(callback: (subscription) => void)
+Register a callback for changes in a users valid subscription.
 **Parameters**:
 ```javascript
 callback (Function)
-└── receives an object with subscribed property set to true or false.
+└── subscription (Object | null)
+    ├── id                 (str)
+    ├── deliveryAddressId  (str | null)
+    ├── blinkSignature     (hex, str)
+    ├── userId             (str)
+    ├── amount             (int)
+    ├── createdAt          (iso date str)
+    ├── canceledAt         (iso date str | null)
+    ├── nextPaymentAttempt (iso date str | null)
+    ├── currencyCode       (str)
+    └── offerId            (str)
  ```
 **Returns**: `void`
 
@@ -128,6 +138,16 @@ callback (Function)
 Prompt the subscription page in the wallet iframe. 
 
 Should be called when the user clicks on “Subscribe” on the publisher’s website.
+
+**Parameters**: `none`
+
+**Returns**: `void`
+
+### &rightarrow; promptDonationPopup()
+
+Prompt the donation page in the wallet iframe.
+
+Should be called when the user clicks on “Donate” on the publisher’s website.
 
 **Parameters**: `none`
 
@@ -143,9 +163,4 @@ Should be called when the user clicks on “Subscribe” on the publisher’s we
 # Mock data
 Credit card: a series of 42 ( eg. `4242424242` ) until you fill the credit card info.
 
-### Merchant account:
-  * **Email** : `test@aaj.org`
-  * **Password** : `GvFTjVXJAp6RQcUzme6HpWPN`
-
-### Integration
-[Example](./blink/src/example)
+# [Integration Example](./blink/src/example)
