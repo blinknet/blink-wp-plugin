@@ -143,6 +143,7 @@ let isUserSubscribed = blinkSDK.isSubscribed()
 <a name="onSubscriptionChange"></a>
 ### &rightarrow; onSubscriptionChange(callback: (subscription) => void)
 Register a callback for changes in a user's valid subscription.
+
 **Parameters**:
 ```javascript
 callback (Function)
@@ -163,6 +164,7 @@ callback (Function)
 <a name="getSubscription"></a>
 ### &rightarrow;  getSubscription()
 Get a user's valid subscription if the user is authenticated and has a valid subscription.
+
 **Parameters**: `none`
 
 **Returns**: 
