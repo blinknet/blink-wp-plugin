@@ -38,10 +38,7 @@ function requestPayment() {
  * Initialize the Blink widget
  */
 function initializeWidget() {
-    blinkSDK.init({clientId: integration.clientId});
-
-    //TODO(mike) @deprecated
-    // blinkSDK.setOptions({publisherDomainId:  parseInt(integration.clientId)});
+    blinkSDK.init({clientId:   parseInt(integration.clientId)});
 
     // request a payment again if a users logs in the same tab with an another account
     blinkSDK.onAuthenticationChange(({authenticated}) => {
@@ -57,7 +54,7 @@ function main() {
      * The event `blinkPaywallLoaded` will be dispatched when the blinkSDK file will be loaded in the browser.
      */
     if (window.blinkSDK) {
-        initializeWidget()
+        initializeWidget();
     } else {
         window.addEventListener('blinkPaywallLoaded', initializeWidget, false);
     }
@@ -67,13 +64,11 @@ function main() {
      * If any of the previous conditions are not met the payment request will be added to an event listener.
      * The event `blinkPaywallReadyForInit` will be dispatched when widget iframe is loaded.
      */
-    if (window.blinkSDK && window.blinkSDK.isReadyForInit()) {
-    //TODO(mike) @deprecated
-    // if (window.blinkSDK && window.blinkSDK.isInitialized()) {
-        requestPayment()
+    if (window.blinkSDK && window.blinkSDK.isInitialized()) {
+        requestPayment();
     } else {
         window.addEventListener('blinkPaywallReadyForInit', requestPayment, false);
     }
 }
 
-main()
+main();
