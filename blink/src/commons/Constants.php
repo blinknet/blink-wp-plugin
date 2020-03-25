@@ -56,7 +56,7 @@ class Constants
     const DEFAULT_CONTENT_PRICE = 1.5 ;
 
     const ENVIRONMENTS = array('Live','Test');
-    const TESTING_DOMAIN = 'blink.net/';
+    const TESTING_DOMAIN = 'qa.blink.net/';
     const PRODUCTION_DOMAIN = 'blink.net/';
     const PAYWALL_VERSION = '1.0/';
     const PAYWALL_FILE = 'blink-sdk.js';
@@ -73,7 +73,7 @@ class Constants
         if(!empty($selected_environment) && $selected_environment == 'live') {
             return self::HTTPS . self::PRODUCTION_DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
         }
-        return self::HTTPS . 'qa.' . self::TESTING_DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
+        return self::HTTPS . self::TESTING_DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
 
     }
 
@@ -87,6 +87,6 @@ class Constants
         if(!empty($selected_environment) && $selected_environment == 'live') {
             return self::HTTPS . 'api.' . self::PRODUCTION_DOMAIN;
         }
-        return self::HTTPS . 'api.'. 'qa.' . self::TESTING_DOMAIN;
+        return self::HTTPS . 'api.'. self::TESTING_DOMAIN;
     }
 }
