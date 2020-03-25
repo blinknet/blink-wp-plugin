@@ -25,11 +25,15 @@ function setupSecretsHandler()
         !isset($_REQUEST[Constants::CONFIGURE_MERCHANT_PASSWORD_FIELD])) {
         return;
     }
-    $email = sanitize_text_field($_POST[Constants::CONFIGURE_MERCHANT_EMAIL_FIELD]);
+    $email = sanitize_email($_POST[Constants::CONFIGURE_MERCHANT_EMAIL_FIELD]);
     $password = sanitize_text_field($_POST[Constants::CONFIGURE_MERCHANT_PASSWORD_FIELD]);
     $environment = sanitize_text_field($_POST[Constants::CONFIGURE_MERCHANT_ENVIRONMENT_FIELD]);
 
     if (empty($email) || empty($password) || empty($environment)) {
+        exit;
+    }
+
+    if (!in_array($environment, Constants::ENVIRONMENTS)){
         exit;
     }
     update_option(Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT, strtolower($environment));
