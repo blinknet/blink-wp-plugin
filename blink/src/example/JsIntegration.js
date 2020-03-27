@@ -1,16 +1,12 @@
 /**
- * The plugin status indicates if SDK methods can be safely called and all required variables are inserted
- * using the wp_localize_script() hook.
+ * The following variables are required for this demo integration.
  * Required variables:
- *      -> post_metadata.paymentInfo   | type : Object
- *      -> publisher.meta.publisher_id | type : int
+ *      -> integration.paymentInfo   | type : Object
+ *      -> integration.clientId  | type : int
  *
- * Status meaning:
- *      -> enabled  : The Blink wordpress plugin is enabled and configured correctly
- *      -> disabled : The plugin is enabled but the private key is missing from the database
- *                    ( e.g the publisher is not logged in the plugin settings page )
+ * The blinkSDK `requestPayment` method requires the payment information as an argument.
+ * The `clientId` is needed in the `init` function of the SDK to load merchant assets. ( e.g name, logo )
  */
-var blink_plugin = {status: 'enabled'};
 
 /**
  * Example implementation of a success callback.
@@ -27,32 +23,52 @@ function successCallback(response) {
     let paywall = document.getElementById('blink-container');
     // Remove the paywall iframe or the error iframe inside the container
     paywall.innerHTML = "";
-    //TODO
+    //TODO(developer)
     // The rest of the JS content management should be placed here
 }
 
 /**
  *  Request a payment from the SDK with a success callback function.
  */
-function payForContent() {
-    if (blink_plugin.status === 'disabled') {
-        return;
-    }
-    blinkSDK.requestPayment(post_metadata.paymentInfo, successCallback);
+function requestPayment() {
+    blinkSDK.requestPayment(integration.paymentInfo, successCallback);
 }
 
 /**
  * Initialize the Blink widget
  */
 function initializeWidget() {
-    if (blink_plugin.status === 'disabled') {
-        return;
-    }
-    blinkSDK.setOptions({publisherDomainId: publisher.meta.publisher_id});
+    blinkSDK.init({clientId:   parseInt(integration.clientId)});
+
     // request a payment again if a users logs in the same tab with an another account
     blinkSDK.onAuthenticationChange(({authenticated}) => {
         if (!authenticated) {
-            payForContent();
+            requestPayment();
         }
     })
 }
+
+function main() {
+    /**
+     * Initialize the Blink widget or add the initialize function to an event listener.
+     * The event `blinkPaywallLoaded` will be dispatched when the blinkSDK file will be loaded in the browser.
+     */
+    if (window.blinkSDK) {
+        initializeWidget();
+    } else {
+        window.addEventListener('blinkPaywallLoaded', initializeWidget, false);
+    }
+
+    /**
+     * Request a payment if the blinkSDK exists and isInitialized.
+     * If any of the previous conditions are not met the payment request will be added to an event listener.
+     * The event `blinkPaywallReadyForInit` will be dispatched when widget iframe is loaded.
+     */
+    if (window.blinkSDK && window.blinkSDK.isInitialized()) {
+        requestPayment();
+    } else {
+        window.addEventListener('blinkPaywallReadyForInit', requestPayment, false);
+    }
+}
+
+main();

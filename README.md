@@ -23,22 +23,44 @@ The Blink SDK will insert an `<iframe>` in this div, containing the paywall.
 The Blink SDK is a javascript file that provides integration with the Blink wallet.
 
 When loaded, it will set a “blinkSDK” property on the window object.
+## SDK Methods
+* [init](#initoptions)
+* [isInitialized](#isinitialized)
+* [requestPayment](#requestPayment)
+* [isAuthenticated](#isAuthenticated)
+* [onAuthenticationChange](#onAuthenticationChange)
+* [isSubscribed](#isSubscribed)
+* [onSubscriptionChange](#onSubscriptionChange)
+* [getSubscription](#getSubscription)
+* [promptSubscriptionPopup](#promptSubscriptionPopup)
+* [promptDonationPopup](#promptdonationpopup)
 
 ### The SDK object has the following API:
-### &rightarrow; setOptions(options)
+<a name="initoptions"></a> 
+### &rightarrow; init(options)
 Configure the SDK, should be the first function called.
 
 **Parameters**:
 ```javascript
 options (Object)
-└── publisherDomainId (int)
+└── clientId (int)
  ```
 **Returns**: `void`
 
 **Example**
 ```javascript
-blinkSDK.setOptions({publisherDomainId: 1});
+blinkSDK.init({clientId: 1});
 ```
+
+<a name="isinitialized"></a>
+### &rightarrow; isInitialized()
+Checks if the SDK has been initialized.
+
+**Parameters**: `none`
+
+**Returns**: `bool`
+
+<a name="requestPayment"></a>
 ### &rightarrow; requestPayment(request , callback, errorCallback)
 Request payment for an article, should be called after the page loads.
 
@@ -67,6 +89,7 @@ Request payment for an article, should be called after the page loads.
 blinkSDK.requestPayment(paymentInfo, successCallback, errorCallback);
 ```
 
+<a name="isAuthenticated"></a>
 ### &rightarrow; isAuthenticated()
 Checks if the user is authenticated.
 
@@ -79,6 +102,7 @@ Checks if the user is authenticated.
 let userStatus = blinkSDK.isAuthenticated()
 ```
 
+<a name="onAuthenticationChange"></a>
 ### &rightarrow; onAuthenticationChange(callback: ({authenticated}) => void)
 Register a callback for changes in authentication status.
 
@@ -103,6 +127,7 @@ blinkSDK.onAuthenticationChange(({authenticated}) => {
 })
 ```
 
+<a name="isSubscribed"></a>
 ### &rightarrow; isSubscribed()
 Checks if the user is subscribed.
 
@@ -115,19 +140,62 @@ Checks if the user is subscribed.
 let isUserSubscribed = blinkSDK.isSubscribed()
 ```
 
-### &rightarrow; onSubscriptionStatusChange(callback: ({subscribed}) => void)
-Register a callback for changes in subscription status.
+<a name="onSubscriptionChange"></a>
+### &rightarrow; onSubscriptionChange(callback: (subscription) => void)
+Register a callback for changes in a user's valid subscription.
+
 **Parameters**:
 ```javascript
 callback (Function)
-└── receives an object with subscribed property set to true or false.
+└── subscription (Object | null)
+    ├── id                 (str)
+    ├── deliveryAddressId  (str | null)
+    ├── blinkSignature     (hex, str)
+    ├── userId             (str)
+    ├── amount             (int)
+    ├── createdAt          (iso date str)
+    ├── canceledAt         (iso date str | null)
+    ├── nextPaymentAttempt (iso date str | null)
+    ├── currencyCode       (str)
+    └── offerId            (str)
  ```
 **Returns**: `void`
 
+<a name="getSubscription"></a>
+### &rightarrow;  getSubscription()
+Get a user's valid subscription if the user is authenticated and has a valid subscription.
+
+**Parameters**: `none`
+
+**Returns**: 
+```javascript
+subscription (Object | null)
+    ├── id                 (str)
+    ├── deliveryAddressId  (str | null)
+    ├── blinkSignature     (hex, str)
+    ├── userId             (str)
+    ├── amount             (int)
+    ├── createdAt          (iso date str)
+    ├── canceledAt         (iso date str | null)
+    ├── nextPaymentAttempt (iso date str | null)
+    ├── currencyCode       (str | null)
+    └── offerId            (str)
+```
+<a name="promptSubscriptionPopup"></a>
 ### &rightarrow; promptSubscriptionPopup()
 Prompt the subscription page in the wallet iframe. 
 
 Should be called when the user clicks on “Subscribe” on the publisher’s website.
+
+**Parameters**: `none`
+
+**Returns**: `void`
+
+<a name="promptDonationPopup"></a>
+### &rightarrow; promptDonationPopup()
+Prompt the donation page in the wallet iframe.
+
+Should be called when the user clicks on “Donate” on the publisher’s website.
 
 **Parameters**: `none`
 
@@ -143,9 +211,4 @@ Should be called when the user clicks on “Subscribe” on the publisher’s we
 # Mock data
 Credit card: a series of 42 ( eg. `4242424242` ) until you fill the credit card info.
 
-### Merchant account:
-  * **Email** : `test@aaj.org`
-  * **Password** : `GvFTjVXJAp6RQcUzme6HpWPN`
-
-### Integration
-[Example](./blink/src/example)
+# [Integration Example](./blink/src/example)
