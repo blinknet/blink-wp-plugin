@@ -26,7 +26,7 @@ function blinkIncludePluginFiles()
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/commons/SDK_Injector.php');
 
     // Shortcode
-    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/Blink_Shortcode.php');
+    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/Blink_Donate.php');
 
     // Widget
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/Blink_Widget.php');
