@@ -1,0 +1,54 @@
+<?php
+
+
+namespace Blink;
+defined('ABSPATH') or die;
+
+
+class Constants
+{
+
+    const BLINK_WIDGET_ID = '__blink_ledger_systems_inc_donation_widget_id';
+
+    //--------------------------- Database Objects --------------------------------------
+    // DATABASE
+    // pattern: DATABASE_{TABLE}_{OBJECT}
+    const DATABASE_OPTIONS_SETTINGS_GROUP = 'blink-settings-group';
+
+    const DATABASE_OPTIONS_MERCHANT_ALIAS = '__blink_merchant_alias';
+    const DATABASE_OPTIONS_RUNNING_ENVIRONMENT = '__blink_selected_running_environment';
+
+    // --------------------------- File Handlers -----------------------------------------
+    const JS_FILE_HANDLE = 'blink-javascript-handle';
+
+    //--------------------------- General Settings  --------------------------------------
+    const ENVIRONMENTS = array('Live','Test');
+    const TESTING_DOMAIN = 'demo.blink.net/';
+    const PRODUCTION_DOMAIN = 'blink.net/';
+    const PAYWALL_VERSION = '1.0/';
+    const PAYWALL_FILE = 'blink-sdk.js';
+
+    const HTTPS = 'https://';
+
+    public static function get_website_url(): string {
+        $selected_environment = strtolower(get_option(Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT));
+        if(!empty($selected_environment) && $selected_environment == 'live') {
+            return self::HTTPS . self::PRODUCTION_DOMAIN;
+        }
+        return self::HTTPS . self::TESTING_DOMAIN;
+    }
+
+    /**
+     * Returns the BlinkSDK javascript file url.
+     * @api
+     * @return string
+     */
+    public static function get_SDK_url() : string {
+        $selected_environment = strtolower(get_option(Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT));
+        if(!empty($selected_environment) && $selected_environment == 'live') {
+            return self::HTTPS . self::PRODUCTION_DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
+        }
+        return self::HTTPS . self::TESTING_DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
+
+    }
+}
