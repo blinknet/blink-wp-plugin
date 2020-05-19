@@ -32,7 +32,7 @@ class SDK_Injector
         }
 
         // Add the js needed to init blink sdk
-        wp_enqueue_script(Constants::JS_FILE_HANDLE, BLINK_PLUGIN_ROOT_URL . 'src/js/blink-plugin.js');
+        wp_enqueue_script(Constants::JS_FILE_HANDLE, plugins_url('js/blink-plugin.js', dirname(__FILE__)));
 
         // Add the merchant alias inside the javascript file
         wp_localize_script(Constants::JS_FILE_HANDLE, 'integration',
