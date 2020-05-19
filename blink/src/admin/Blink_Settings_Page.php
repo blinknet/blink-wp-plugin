@@ -33,11 +33,10 @@ class SettingsPage
     }
 
     /**
-     * Adds the default article price and currency iso code
+     * Register the merchant alias and environment to the option db.
      */
     static function addOptionsToDatabase()
     {
-        // add options to database
         register_setting(
             Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
             Constants::DATABASE_OPTIONS_MERCHANT_ALIAS,

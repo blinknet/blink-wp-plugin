@@ -19,11 +19,13 @@ function blinkIncludePluginFiles()
     if ( !defined( 'BLINK_PLUGIN_ROOT_URL' ) )
         define( 'BLINK_PLUGIN_ROOT_URL', plugin_dir_url(__FILE__) );
 
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/SettingsPage.php');
+    include($BLINK_PLUGIN_FOLDER_PATH . 'src/admin/Blink_Settings_Page.php');
 
     // Import constants
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/commons/Constants.php');
-    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/commons/SDK_Injector.php');
+
+    // Classes used in the integration
+    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/classes/Blink_SDK_Injector.php');
 
     // Shortcode
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/shortcodes/Blink_Donate_Shortcode.php');
