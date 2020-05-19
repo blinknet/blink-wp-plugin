@@ -16,8 +16,6 @@ function blinkIncludePluginFiles()
 {
 
     $BLINK_PLUGIN_FOLDER_PATH = plugin_dir_path(__FILE__);
-    if ( !defined( 'BLINK_PLUGIN_ROOT_URL' ) )
-        define( 'BLINK_PLUGIN_ROOT_URL', plugin_dir_url(__FILE__) );
     if ( !defined( 'BLINK_PLUGIN_ROOT_DIR' ) )
         define( 'BLINK_PLUGIN_ROOT_DIR', plugin_dir_path(__FILE__) );
 
