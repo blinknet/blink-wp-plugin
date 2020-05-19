@@ -35,7 +35,7 @@ class SDK_Injector
         wp_enqueue_script(Constants::JS_FILE_HANDLE, plugins_url('js/blink-plugin.js', dirname(__FILE__)));
 
         // Add the merchant alias inside the javascript file
-        wp_localize_script(Constants::JS_FILE_HANDLE, 'integration',
+        wp_localize_script(Constants::JS_FILE_HANDLE, 'blinkIntegration',
             array(
                 'clientId' => $merchantAlias,
             )

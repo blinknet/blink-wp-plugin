@@ -2,7 +2,7 @@
  * Initialize the Blink widget
  */
 function initializeBlinkMerchant() {
-    blinkSDK.init({clientId:  integration.clientId});
+    blinkSDK.init({clientId:  blinkIntegration.clientId});
 }
 
 function main() {
