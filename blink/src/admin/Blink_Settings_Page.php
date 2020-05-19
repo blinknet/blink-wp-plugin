@@ -55,8 +55,8 @@ class SettingsPage
         ?>
         <div class="wrap">
             <?php
-            include(BLINK_PLUGIN_ROOT_URL . 'assets/Blink_Logo.php');
-            include(BLINK_PLUGIN_ROOT_URL . 'templates/Blink_Settings_Form.php');
+            include(BLINK_PLUGIN_ROOT_DIR . 'src/assets/Blink_Logo.php');
+            include(BLINK_PLUGIN_ROOT_DIR . 'src/templates/Blink_Settings_Form.php');
             ?>
         </div>
         <?php

@@ -15,20 +15,27 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
     <?php settings_fields(Blink\Constants::DATABASE_OPTIONS_SETTINGS_GROUP); ?>
     <table class="form-table">
         <tr valign="top">
-            <th scope="row">Merchant Alias</th>
+            <th scope="row">Blink Client ID:</th>
             <td><input
                        name="<?php echo Blink\Constants::DATABASE_OPTIONS_MERCHANT_ALIAS; ?>"
                        value="<?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_MERCHANT_ALIAS)); ?>"/>
             </td>
         </tr>
         <tr valign="top">
-            <th scope="row">Environment</th>
+            <th scope="row">Blink environment:</th>
             <td>
                 <select name="<?php echo Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT; ?>">
                     <?php
                     foreach (Blink\Constants::ENVIRONMENTS as $env) { ?>
-                        <option value="<?php echo $env ?>" <?php
-                        ?>><?php echo $env ?>
+                        <option
+                        value="<?php echo $env ?>"
+                        <?php
+                        if($env == esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT))) {
+                        ?>
+                            selected
+                        <?php } ?>
+                        >
+                        <?php echo $env ?>
                         </option>
                     <?php } ?>
                 </select>
