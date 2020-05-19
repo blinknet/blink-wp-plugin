@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Blink Donations
-Description: Blink donation
+Plugin Name: Blink
+Description: Blink is a set of tools built to help publishers and creators of digital content.
 Author: Blink Ledger Systems Inc.
 Requires PHP: 7.3
 Author URI: https://blink.net

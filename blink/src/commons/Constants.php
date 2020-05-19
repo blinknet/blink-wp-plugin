@@ -7,7 +7,7 @@ defined('ABSPATH') or die;
 
 class Constants
 {
-
+    // --------------------------- UI Object IDs ----------------------------------------
     const BLINK_WIDGET_ID = '__blink_ledger_systems_inc_donation_widget_id';
 
     //--------------------------- Database Objects --------------------------------------
@@ -21,7 +21,7 @@ class Constants
     // --------------------------- File Handlers -----------------------------------------
     const JS_FILE_HANDLE = 'blink-javascript-handle';
 
-    //--------------------------- General Settings  --------------------------------------
+    //--------------------------- Environment Settings  --------------------------------------
     const ENVIRONMENTS = array('Live','Test');
     const TESTING_DOMAIN = 'demo.blink.net/';
     const PRODUCTION_DOMAIN = 'blink.net/';
