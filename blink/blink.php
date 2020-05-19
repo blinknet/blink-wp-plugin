@@ -31,12 +31,6 @@ function blinkIncludePluginFiles()
     // Widgets
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/widgets/Blink_Donate_Widget.php');
 
-    /**
-     * @example `src/example/PhpIntegration.php`  Demo integration in the php backend
-     * @example `src/example/JsIntegration`       Demo of blinkSDK api calls and placeholder for content management
-     */
-//    @todo Uncomment to include example integration
-//    include($BLINK_PLUGIN_FOLDER_PATH . 'src/example/PhpIntegration.php');
 }
 
 add_action( 'plugins_loaded', 'blinkIncludePluginFiles');
