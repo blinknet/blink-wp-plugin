@@ -26,10 +26,10 @@ function blinkIncludePluginFiles()
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/commons/SDK_Injector.php');
 
     // Shortcode
-    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/Blink_Donate.php');
+    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/shortcodes/Blink_Donate.php');
 
-    // Widget
-    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/Blink_Widget.php');
+    // Widgets
+    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/widgets/Blink_Donate_Widget.php');
 
     /**
      * @example `src/example/PhpIntegration.php`  Demo integration in the php backend
