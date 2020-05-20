@@ -8,10 +8,10 @@ class SettingsPage
 {
 
     // Blink Setting page constants
-    private const pageTitle = "Blink Settings";
-    private const menuTitle = "Blink Settings";
-    private const pagePermissions = "administrator";
-    private const pageUUID = "blink_pay_settings"; // unique identifier
+    const pageTitle = "Blink Settings";
+    const menuTitle = "Blink Settings";
+    const pagePermissions = "administrator";
+    const pageUUID = "blink_pay_settings"; // unique identifier
 
     /**
      * Adds Blink Settings page to the sidebar of admin dashboard.
@@ -39,11 +39,11 @@ class SettingsPage
     {
         register_setting(
             Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_MERCHANT_ALIAS,
+            Constants::DATABASE_OPTIONS_MERCHANT_ALIAS
         );
         register_setting(
             Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT,
+            Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT
         );
     }
 
