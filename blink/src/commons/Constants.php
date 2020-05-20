@@ -30,7 +30,7 @@ class Constants
 
     const HTTPS = 'https://';
 
-    public static function get_website_url(): string {
+    public static function get_website_url() {
         $selected_environment = strtolower(get_option(Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT));
         if(!empty($selected_environment) && $selected_environment == 'live') {
             return self::HTTPS . self::PRODUCTION_DOMAIN;
@@ -43,7 +43,7 @@ class Constants
      * @api
      * @return string
      */
-    public static function get_SDK_url() : string {
+    public static function get_SDK_url() {
         $selected_environment = strtolower(get_option(Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT));
         if(!empty($selected_environment) && $selected_environment == 'live') {
             return self::HTTPS . self::PRODUCTION_DOMAIN . self::PAYWALL_VERSION . self::PAYWALL_FILE;
