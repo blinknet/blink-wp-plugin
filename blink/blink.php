@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blink
-Description: The future of online news. Blink provides single log-in across publications, seamless payments for articles and one-click subscriptions. Explore and support the best journalism quality journalism.
+Description: Blink is a set of tools built to help publishers and creators of digital content.
 Author: Blink Ledger Systems Inc.
 Requires PHP: 7.3
 Author URI: https://blink.net
@@ -12,41 +12,28 @@ Version: 1.0.0
 
 defined('ABSPATH') or die;
 
-function includePluginFiles()
+function blinkIncludePluginFiles()
 {
 
     $BLINK_PLUGIN_FOLDER_PATH = plugin_dir_path(__FILE__);
-    if ( !defined( 'BLINK_PLUGIN_ROOT_URL' ) )
-        define( 'BLINK_PLUGIN_ROOT_URL', plugin_dir_url(__FILE__) );
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/SettingsPage.php');
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/SettingsPageSecretsHandler.php');
+    if ( !defined( 'BLINK_PLUGIN_ROOT_DIR' ) )
+        define( 'BLINK_PLUGIN_ROOT_DIR', plugin_dir_path(__FILE__) );
 
-    // Add custom meta box on add/edit posts page
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/ArticleConfigurationDropdown.php');
+    // Admin UI
+    include($BLINK_PLUGIN_FOLDER_PATH . 'src/admin/Blink_Settings_Page.php');
 
     // Import constants
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/commons/Constants.php');
-    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/commons/DatabaseUtils.php');
 
-    // Import api calls
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/commons/Api.php');
+    // Classes used in the integration
+    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/classes/Blink_SDK_Injector.php');
 
-    // Import crypto files
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/crypto/BlinkCryptoException.php');
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/crypto/Payment.php');
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/crypto/PaymentInfo.php');
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/crypto/PostComment.php');
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/crypto/Utils.php');
+    // Shortcode
+    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/shortcodes/Blink_Donate_Shortcode.php');
 
-    // Import payment generator
-    include($BLINK_PLUGIN_FOLDER_PATH . 'src/PaymentInfoGenerator.php');
+    // Widgets
+    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/widgets/Blink_Donate_Widget.php');
 
-    /**
-     * @example `src/example/PhpIntegration.php`  Demo integration in the php backend
-     * @example `src/example/JsIntegration`       Demo of blinkSDK api calls and placeholder for content management
-     */
-//    @todo Uncomment to include example integration
-//    include($BLINK_PLUGIN_FOLDER_PATH . 'src/example/PhpIntegration.php');
 }
 
-add_action( 'plugins_loaded', 'includePluginFiles');
+add_action( 'plugins_loaded', 'blinkIncludePluginFiles');

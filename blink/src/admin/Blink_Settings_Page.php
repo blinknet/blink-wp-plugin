@@ -33,14 +33,17 @@ class SettingsPage
     }
 
     /**
-     * Adds the default article price and currency iso code
+     * Register the merchant alias and environment to the option db.
      */
     static function addOptionsToDatabase()
     {
-        // add options to database
         register_setting(
             Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_DEFAULT_ARTICLE_PRICE
+            Constants::DATABASE_OPTIONS_MERCHANT_ALIAS,
+        );
+        register_setting(
+            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
+            Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT,
         );
     }
 
@@ -52,13 +55,8 @@ class SettingsPage
         ?>
         <div class="wrap">
             <?php
-            include(plugin_dir_path(__FILE__) . 'views/BlinkLogo.php');
-            $privateKey = get_option(Constants::DATABASE_OPTIONS_MERCHANT_PRIVATE_KEY);
-            if (empty($privateKey)) {
-                include(plugin_dir_path(__FILE__) . 'views/SecretsForm.php');
-            } else {
-                include(plugin_dir_path(__FILE__) . 'views/GeneralSettingsForm.php');
-            }
+            include(BLINK_PLUGIN_ROOT_DIR . 'src/assets/Blink_Logo.php');
+            include(BLINK_PLUGIN_ROOT_DIR . 'src/templates/Blink_Settings_Form.php');
             ?>
         </div>
         <?php
