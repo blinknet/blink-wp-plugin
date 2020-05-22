@@ -27,6 +27,7 @@ function blinkIncludePluginFiles()
 
     // Classes used in the integration
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/classes/Blink_SDK_Injector.php');
+    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/classes/Blink_Donate_Bottom_Content.php');
 
     // Shortcode
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/shortcodes/Blink_Donate_Shortcode.php');

@@ -41,6 +41,19 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
                 </select>
             </td>
         </tr>
+        <tr valign="top">
+            <th scope="row">Show donate after article</th>
+            <td><input type="checkbox"
+                        name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_AFTER_CONTENT; ?>"
+                        value="<?php echo Blink\Constants::DONATIONS_AFTER_EACH_ARTICLE; ?>"
+                    <?php
+                    if(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_AFTER_CONTENT)) == Blink\Constants::DONATIONS_AFTER_EACH_ARTICLE) {
+                    ?>
+                        checked
+                    <?php } ?>
+                />
+            </td>
+        </tr>
     </table>
     <?php submit_button(); ?>
 </form>
