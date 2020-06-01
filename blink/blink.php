@@ -5,7 +5,7 @@ Description: Blink is a set of tools built to help publishers and creators of di
 Author: Blink Ledger Systems Inc.
 Requires PHP: 5.6
 Author URI: https://blink.net
-Version: 1.0.0
+Version: 1.0.1
 */
 
 

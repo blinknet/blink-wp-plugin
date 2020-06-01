@@ -31,18 +31,21 @@ class SDK_Injector
             return;
         }
 
-        // Add the js needed to init blink sdk
-        wp_enqueue_script(Constants::JS_FILE_HANDLE, plugins_url('js/blink-plugin.js', dirname(__FILE__)));
-
-        // Add the merchant alias inside the javascript file
-        wp_localize_script(Constants::JS_FILE_HANDLE, 'blinkIntegration',
-            array(
-                'clientId' => $merchantAlias,
-            )
-        );
+        ?>
+        <script>
+            function initializeBlinkMerchant() {
+                blinkSDK.init({clientId: "<?php echo $merchantAlias ?>"});
+            }
+            if (window.blinkSDK) {
+                initializeBlinkMerchant();
+            } else {
+                window.addEventListener('blinkPaywallLoaded', initializeBlinkMerchant, false);
+            }
+        </script>
+        <?php
     }
 
 }
 
+add_action('wp_head', array('Blink\SDK_Injector', 'init_merchant'));
 add_action('wp_enqueue_scripts', array('Blink\SDK_Injector', 'add_sdk'));
-add_action('wp_enqueue_scripts', array('Blink\SDK_Injector', 'init_merchant'));

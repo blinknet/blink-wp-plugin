@@ -22,9 +22,6 @@ class Constants
     // --------------------------- Value Constants ---------------------------------------
     const DONATIONS_AFTER_EACH_ARTICLE = '_blink_donation_after_article';
 
-    // --------------------------- File Handlers -----------------------------------------
-    const JS_FILE_HANDLE = 'blink-javascript-handle';
-
     //--------------------------- Environment Settings  --------------------------------------
     const ENVIRONMENTS = array('Live','Test');
     const TESTING_DOMAIN = 'demo.blink.net/';
