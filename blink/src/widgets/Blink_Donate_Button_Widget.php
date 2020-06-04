@@ -50,7 +50,11 @@ class Blink_Donate_Button_Widget extends WP_Widget
                 box-shadow: 0 2px 10px 0 rgba(6,73,83,.48);
             }
         </style>
-        <button onclick="blinkSDK.promptDonationPopup()" class="blink-button"><?php echo $instance['blink_donation_text'] ?></button>
+        <button
+                onclick="blinkSDK.promptDonationPopup()"
+                class="blink-button"
+        ><?php echo $instance['blink_donation_text'] ?>
+        </button>
         <?php
         $blink_donation_button = ob_get_clean();
         echo $blink_donation_button;
