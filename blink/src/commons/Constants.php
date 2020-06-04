@@ -8,7 +8,8 @@ defined('ABSPATH') or die;
 class Constants
 {
     // --------------------------- UI Object IDs ----------------------------------------
-    const BLINK_WIDGET_ID = '__blink_ledger_systems_inc_donation_widget_id';
+    const BLINK_DONATE_WIDGET_ID = '__blink_ledger_systems_inc_donation_widget_id';
+    const BLINK_DONATE_BUTTON_WIDGET_ID = '__blink_ledger_systems_inc_donation_button_widget_id';
 
     //--------------------------- Database Objects --------------------------------------
     // DATABASE

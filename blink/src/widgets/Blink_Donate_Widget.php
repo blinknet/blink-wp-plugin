@@ -4,7 +4,7 @@ use Blink\Constants;
 class Blink_Donation_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
-            Constants::BLINK_WIDGET_ID,
+            Constants::BLINK_DONATE_WIDGET_ID,
             "Blink donation widget"
         );
     }

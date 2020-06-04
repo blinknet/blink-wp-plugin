@@ -34,6 +34,7 @@ function blinkIncludePluginFiles()
 
     // Widgets
     require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/widgets/Blink_Donate_Widget.php');
+    require_once($BLINK_PLUGIN_FOLDER_PATH . 'src/widgets/Blink_Donate_Button_Widget.php');
 
 }
 
