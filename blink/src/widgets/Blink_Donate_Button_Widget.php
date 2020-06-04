@@ -3,12 +3,13 @@ use Blink\Constants;
 
 class Blink_Donate_Button_Widget extends WP_Widget
 {
+    const _ButtonTextKey = 'blink_donation_text';
     public function __construct()
     {
         parent::__construct(
             Constants::BLINK_DONATE_BUTTON_WIDGET_ID,
             "Blink donation button",
-            array( 'description' => esc_html__( 'Display a Blink button for donations', 'text_domain' ), )
+            array( 'description' => esc_html__( 'Displays a Blink button for donations.', 'text_domain' ), )
         );
     }
 
@@ -31,7 +32,8 @@ class Blink_Donate_Button_Widget extends WP_Widget
                 padding: 13px;
                 border-radius: 4px;
                 outline: 0;
-                font-size: 16px;
+                font-size: 18px;
+                font-weight: bold;
                 font-family: Lato, 'Segoe UI', 'Lucida Sans Unicode', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 border: none;
                 cursor: pointer;
@@ -53,8 +55,7 @@ class Blink_Donate_Button_Widget extends WP_Widget
         <button
                 onclick="blinkSDK.promptDonationPopup()"
                 class="blink-button"
-        ><?php echo $instance['blink_donation_text'] ?>
-        </button>
+        ><?php echo $instance[Blink_Donate_Button_Widget::_ButtonTextKey] ?></button>
         <?php
         $blink_donation_button = ob_get_clean();
         echo $blink_donation_button;
@@ -69,11 +70,11 @@ class Blink_Donate_Button_Widget extends WP_Widget
      * @param array $instance Previously saved values from database.
      */
     public function form( $instance ) {
-        $donation_text = ! empty( $instance['blink_donation_text'] ) ? $instance['blink_donation_text'] : esc_html__( 'please donate today', 'text_domain' );
+        $donation_text = ! empty( $instance[Blink_Donate_Button_Widget::_ButtonTextKey] ) ? $instance[Blink_Donate_Button_Widget::_ButtonTextKey] : esc_html__( Constants::DONATIONS_BUTTON_WIDGET_DEFAULT_TEXT, 'text_domain' );
         ?>
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'blink_donation_text' ) ); ?>"><?php esc_attr_e( 'Button text:', 'text_domain' ); ?></label>
-            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'blink_donation_text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'blink_donation_text' ) ); ?>" type="text" value="<?php echo esc_attr( $donation_text ); ?>">
+            <label for="<?php echo esc_attr( $this->get_field_id( Blink_Donate_Button_Widget::_ButtonTextKey ) ); ?>"><?php esc_attr_e( 'Button text:', 'text_domain' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( Blink_Donate_Button_Widget::_ButtonTextKey ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( Blink_Donate_Button_Widget::_ButtonTextKey ) ); ?>" type="text" value="<?php echo esc_attr( $donation_text ); ?>">
         </p>
         <?php
     }
@@ -90,7 +91,7 @@ class Blink_Donate_Button_Widget extends WP_Widget
      */
     public function update( $new_instance, $old_instance ) {
         $instance = array();
-        $instance['blink_donation_text'] = ( ! empty( $new_instance['blink_donation_text'] ) ) ? sanitize_text_field( $new_instance['blink_donation_text'] ) : 'Please donate today';
+        $instance[Blink_Donate_Button_Widget::_ButtonTextKey] = ( ! empty( $new_instance[Blink_Donate_Button_Widget::_ButtonTextKey] ) ) ? sanitize_text_field( $new_instance[Blink_Donate_Button_Widget::_ButtonTextKey] ) : Constants::DONATIONS_BUTTON_WIDGET_DEFAULT_TEXT;
 
         return $instance;
     }
@@ -102,3 +103,11 @@ function register_blink_donation_button_widget()
 }
 
 add_action('widgets_init', 'register_blink_donation_button_widget');
+
+function include_button_fonts()
+{
+    ?>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="preload" as="style" onload="this.rel='stylesheet'">
+    <?php
+}
+add_action('wp_head', 'include_button_fonts');

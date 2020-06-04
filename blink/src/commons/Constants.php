@@ -20,8 +20,11 @@ class Constants
     const DATABASE_OPTIONS_RUNNING_ENVIRONMENT = '__blink_selected_running_environment';
     const DATABASE_OPTIONS_DONATE_AFTER_CONTENT = '__blink_enable_donate_after_content';
 
-    // --------------------------- Value Constants ---------------------------------------
+    // --------------------------- Form Value Constants -------------------------------------
     const DONATIONS_AFTER_EACH_ARTICLE = '_blink_donation_after_article';
+
+    // -------------------------- Constant values --------------------------------------
+    const DONATIONS_BUTTON_WIDGET_DEFAULT_TEXT = 'Donate';
 
     //--------------------------- Environment Settings  --------------------------------------
     const ENVIRONMENTS = array('Live','Test');
