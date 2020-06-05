@@ -4,8 +4,9 @@ use Blink\Constants;
 class Blink_Donation_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
-            Constants::BLINK_WIDGET_ID,
-            "Blink donation widget"
+            Constants::BLINK_DONATE_WIDGET_ID,
+            "Blink donation widget",
+            array( 'description' => esc_html__( 'Displays the Blink donations iframe.', 'text_domain' ), )
         );
     }
 
