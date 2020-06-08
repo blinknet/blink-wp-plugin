@@ -30,11 +30,16 @@ class SDK_Injector
         if(empty($merchantAlias)){
             return;
         }
-
         ?>
         <script>
             function initializeBlinkMerchant() {
-                blinkSDK.init({clientId: "<?php echo $merchantAlias ?>"});
+                blinkSDK.init({
+                    clientId: "<?php echo $merchantAlias ?>",
+                    donateModal : {
+                        <?php if(!empty(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))) { ?>
+                        message : ["<?php echo sanitize_text_field(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))?>"],
+                        <?php } ?>}
+                });
             }
             if (window.blinkSDK) {
                 initializeBlinkMerchant();
