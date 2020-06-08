@@ -19,12 +19,14 @@ class Constants
     const DATABASE_OPTIONS_MERCHANT_ALIAS = '__blink_merchant_alias';
     const DATABASE_OPTIONS_RUNNING_ENVIRONMENT = '__blink_selected_running_environment';
     const DATABASE_OPTIONS_DONATE_AFTER_CONTENT = '__blink_enable_donate_after_content';
+    const DATABASE_OPTIONS_DONATE_MESSAGE = '__blink_donation_custom_message';
 
     // --------------------------- Form Value Constants -------------------------------------
     const DONATIONS_AFTER_EACH_ARTICLE = '_blink_donation_after_article';
 
     // -------------------------- Constant values --------------------------------------
     const DONATIONS_BUTTON_WIDGET_DEFAULT_TEXT = 'Donate';
+    const DONATIONS_CUSTOM_MESSAGE_PLACEHOLDER = "Publisher Name relies on support from readers like yourself. Even a small amount would help us improve our coverage.";
 
     //--------------------------- Environment Settings  --------------------------------------
     const ENVIRONMENTS = array('Live','Test');

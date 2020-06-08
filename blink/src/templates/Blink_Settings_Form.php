@@ -11,7 +11,7 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
         <?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_MERCHANT_ALIAS))?></span> merchant.
 </h3>
 <?php } ?>
-<form method="post" action="options.php">
+<form method="post" action="options.php" id="blink-plugin-settings-form-id">
     <?php settings_fields(Blink\Constants::DATABASE_OPTIONS_SETTINGS_GROUP); ?>
     <table class="form-table">
         <tr valign="top">
@@ -42,7 +42,7 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
             </td>
         </tr>
         <tr valign="top">
-            <th scope="row">Show donate after article</th>
+            <th scope="row">Show donate after article:</th>
             <td><input type="checkbox"
                         name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_AFTER_CONTENT; ?>"
                         value="<?php echo Blink\Constants::DONATIONS_AFTER_EACH_ARTICLE; ?>"
@@ -52,6 +52,17 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
                         checked
                     <?php } ?>
                 />
+            </td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Custom donation message:</th>
+            <td>
+                <textarea
+                    rows="6"
+                    cols="50"
+                    placeholder="<?php echo Blink\Constants::DONATIONS_CUSTOM_MESSAGE_PLACEHOLDER; ?>"
+                    name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE; ?>"
+                    form="blink-plugin-settings-form-id"><?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE)) ?></textarea>
             </td>
         </tr>
     </table>

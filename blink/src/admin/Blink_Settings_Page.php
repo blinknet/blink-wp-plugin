@@ -49,6 +49,10 @@ class SettingsPage
             Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
             Constants::DATABASE_OPTIONS_DONATE_AFTER_CONTENT
         );
+        register_setting(
+            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
+            Constants::DATABASE_OPTIONS_DONATE_MESSAGE
+        );
     }
 
     /**
