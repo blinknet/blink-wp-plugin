@@ -30,6 +30,25 @@ class SDK_Injector
         if(empty($merchantAlias)){
             return;
         }
+        $inactiveSeconds = null;
+        $dbInactiveSecondsValue = get_option(Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS);
+        $dbInactiveSecondsMultiplierValue = get_option(Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS_MULTIPLIER);
+        if(!empty($dbInactiveSecondsValue) &&
+           !empty($dbInactiveSecondsMultiplierValue) &&
+            intval($dbInactiveSecondsValue) > 0
+        ) {
+            $inactiveSeconds = intval($dbInactiveSecondsValue) * Constants::get_time_seconds_multiplier($dbInactiveSecondsMultiplierValue);
+        }
+
+        $throttleSeconds = null;
+        $dbThrottleSecondsValue = get_option(Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS);
+        $dbThrottleSecondsMultiplier = get_option(Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER);
+        if(!empty($dbThrottleSecondsValue) &&
+            !empty($dbThrottleSecondsMultiplier) &&
+            intval($dbThrottleSecondsValue) > 0
+        ){
+            $throttleSeconds = intval($dbThrottleSecondsValue) * Constants::get_time_seconds_multiplier($dbThrottleSecondsMultiplier);
+        }
         ?>
         <script>
             function initializeBlinkMerchant() {
@@ -37,8 +56,15 @@ class SDK_Injector
                     clientId: "<?php echo $merchantAlias ?>",
                     donateModal : {
                         <?php if(!empty(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))) { ?>
-                        message : ["<?php echo sanitize_text_field(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))?>"],
-                        <?php } ?>}
+                        message : "<?php echo sanitize_text_field(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))?>",
+                        <?php } ?>
+                        <?php if($inactiveSeconds != null) { ?>
+                        inactiveSeconds : <?php echo $inactiveSeconds?>,
+                        <?php } ?>
+                        <?php if($throttleSeconds != null) { ?>
+                        throttleSeconds : <?php echo $throttleSeconds?>,
+                        <?php } ?>
+                    }
                 });
             }
             if (window.blinkSDK) {
