@@ -54,6 +54,14 @@ class SettingsPage
             Constants::DATABASE_OPTIONS_DONATE_MESSAGE
         );
 
+        //---- Options for donation pop up
+
+        // enable or disable user pop-up
+        register_setting(
+            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
+            Constants::DATABASE_OPTIONS_ENABLE_DONATE_POP_UP
+        );
+
         register_setting(
             Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
             Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS_MULTIPLIER

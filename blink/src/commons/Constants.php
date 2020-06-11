@@ -21,23 +21,28 @@ class Constants
     const DATABASE_OPTIONS_DONATE_AFTER_CONTENT = '__blink_enable_donate_after_content';
     const DATABASE_OPTIONS_DONATE_MESSAGE = '__blink_donation_custom_message';
 
+    const DATABASE_OPTIONS_ENABLE_DONATE_POP_UP = '__blink_donate_enable_user_pop_up';
+
     const DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS = '__blink_donation_pop_up_inactive_seconds';
     const DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS_MULTIPLIER = '__blink_donation_pop_up_inactive_seconds_multiplier';
 
-    const DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS = '__blink_donation_pop_up_after_page_enter_seconds';
-    const DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER = '__blink_donation_pop_up_after_page_enter_seconds_multiplier';
+//TODO(MIKE) WILL BE USED LATER
+//    const DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS = '__blink_donation_pop_up_after_page_enter_seconds';
+//    const DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER = '__blink_donation_pop_up_after_page_enter_seconds_multiplier';
 
     const DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS = '__blink_donation_throttle_seconds';
     const DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER = '__blink_donation_throttle_seconds_multiplier';
 
+//TODO(MIKE) WILL BE USED LATER
     const DATABASE_OPTIONS_DONATE_THROTTLE_COUNT_PER_SESSION = '__blink_donation_throttle_count_per_session';
 
     // --------------------------- Form Value Constants -------------------------------------
     const DONATIONS_AFTER_EACH_ARTICLE = '_blink_donation_after_article';
+    const DONATIONS_ENABLE_POP_UP = '_blink_donation_pop_up_enabled';
 
     // -------------------------- Constant values --------------------------------------
     const DONATIONS_BUTTON_WIDGET_DEFAULT_TEXT = 'Donate';
-    const DONATIONS_CUSTOM_MESSAGE_PLACEHOLDER = "Publisher Name relies on support from readers like yourself. Even a small amount would help us improve our coverage.";
+    const DONATIONS_CUSTOM_MESSAGE_PLACEHOLDER = "We rely on support from readers like yourself. Even a small amount would help us improve our coverage.";
 
     //--------------------------- Environment Settings  --------------------------------------
     const ENVIRONMENTS = array('Live','Test');

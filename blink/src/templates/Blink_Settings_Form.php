@@ -55,6 +55,30 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
             </td>
         </tr>
         <tr valign="top">
+            <th scope="row">Custom donation message:</th>
+            <td>
+                <textarea
+                        rows="6"
+                        cols="50"
+                        placeholder="<?php echo Blink\Constants::DONATIONS_CUSTOM_MESSAGE_PLACEHOLDER; ?>"
+                        name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE; ?>"
+                        form="blink-plugin-settings-form-id"><?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE)) ?></textarea>
+            </td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Enable donation pop-up:</th>
+            <td><input type="checkbox"
+                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_ENABLE_DONATE_POP_UP; ?>"
+                       value="<?php echo Blink\Constants::DONATIONS_ENABLE_POP_UP; ?>"
+                    <?php
+                    if(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_ENABLE_DONATE_POP_UP)) == Blink\Constants::DONATIONS_ENABLE_POP_UP) {
+                        ?>
+                        checked
+                    <?php } ?>
+                />
+            </td>
+        </tr>
+        <tr valign="top">
             <th scope="row">Inactive seconds</th>
             <td>
                 <input type="number" min="0" step="1"
@@ -77,7 +101,7 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
                         </option>
                     <?php } ?>
                 </select>
-                <div>Show users a donation pop-up after they spend the configured amount on time inactive on the website.</div>
+                <div>Show users a donation pop-up after they spend the configured amount of time inactive on the website.</div>
             </td>
         </tr>
         <tr valign="top">
@@ -105,17 +129,6 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
                     <?php } ?>
                 </select>
                 <div>The minimum time to wait between consecutive appearances of the donation pop-up to a user.</div>
-            </td>
-        </tr>
-        <tr valign="top">
-            <th scope="row">Custom donation message:</th>
-            <td>
-                <textarea
-                    rows="6"
-                    cols="50"
-                    placeholder="<?php echo Blink\Constants::DONATIONS_CUSTOM_MESSAGE_PLACEHOLDER; ?>"
-                    name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE; ?>"
-                    form="blink-plugin-settings-form-id"><?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE)) ?></textarea>
             </td>
         </tr>
     </table>
