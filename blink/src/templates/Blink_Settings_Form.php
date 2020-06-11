@@ -79,7 +79,7 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
             </td>
         </tr>
         <tr valign="top">
-            <th scope="row">Inactive seconds</th>
+            <th scope="row">Inactive time until pop-up is shown:</th>
             <td>
                 <input type="number" min="0" step="1"
                        style="vertical-align: bottom"
@@ -106,7 +106,7 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
         </tr>
         <tr valign="top">
             <th scope="row">
-                <div>Donation popup throttle</div>
+                <div>Donation popup throttle rate:</div>
             </th>
             <td>
                 <input type="number" min="0" step="1"
