@@ -42,10 +42,10 @@ class SDK_Injector
                 blinkSDK.init({
                     clientId: "<?php echo $merchantAlias ?>",
                     donateModal : {
+                        <?php if(!empty(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))) { ?>
+                        message : "<?php echo sanitize_text_field(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))?>",
+                        <?php } ?>
                         <?php if(!empty($enableUserDonationPopUp) && $enableUserDonationPopUp == Constants::DONATIONS_ENABLE_POP_UP) { ?>
-                            <?php if(!empty(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))) { ?>
-                            message : "<?php echo sanitize_text_field(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))?>",
-                            <?php } ?>
                             <?php if($inactiveSeconds != null) { ?>
                             inactiveSeconds : <?php echo $inactiveSeconds?>,
                             <?php } ?>
