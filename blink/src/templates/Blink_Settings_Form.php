@@ -11,7 +11,7 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
         <?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_MERCHANT_ALIAS))?></span> merchant.
 </h3>
 <?php } ?>
-<form method="post" action="options.php">
+<form method="post" action="options.php" id="blink-plugin-settings-form-id">
     <?php settings_fields(Blink\Constants::DATABASE_OPTIONS_SETTINGS_GROUP); ?>
     <table class="form-table">
         <tr valign="top">
@@ -42,7 +42,7 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
             </td>
         </tr>
         <tr valign="top">
-            <th scope="row">Show donate after article</th>
+            <th scope="row">Show donate after article:</th>
             <td><input type="checkbox"
                         name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_AFTER_CONTENT; ?>"
                         value="<?php echo Blink\Constants::DONATIONS_AFTER_EACH_ARTICLE; ?>"
@@ -52,6 +52,83 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
                         checked
                     <?php } ?>
                 />
+            </td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Custom donation message:</th>
+            <td>
+                <textarea
+                        rows="6"
+                        cols="50"
+                        placeholder="<?php echo Blink\Constants::DONATIONS_CUSTOM_MESSAGE_PLACEHOLDER; ?>"
+                        name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE; ?>"
+                        form="blink-plugin-settings-form-id"><?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE)) ?></textarea>
+            </td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Enable donation pop-up:</th>
+            <td><input type="checkbox"
+                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_ENABLE_DONATE_POP_UP; ?>"
+                       value="<?php echo Blink\Constants::DONATIONS_ENABLE_POP_UP; ?>"
+                    <?php
+                    if(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_ENABLE_DONATE_POP_UP)) == Blink\Constants::DONATIONS_ENABLE_POP_UP) {
+                        ?>
+                        checked
+                    <?php } ?>
+                />
+            </td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">Inactive time until pop-up is shown:</th>
+            <td>
+                <input type="number" min="0" step="1"
+                       style="vertical-align: bottom"
+                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS; ?>"
+                       value="<?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS)); ?>"/>
+                <select style="vertical-align: bottom"
+                        name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS_MULTIPLIER; ?>">
+                    <?php
+                    foreach (array_slice(Blink\Constants::TIME_LEAPS,0,2) as $time_step) { ?>
+                        <option
+                                value="<?php echo $time_step ?>"
+                            <?php
+                            if($time_step == esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS_MULTIPLIER))) {
+                                ?>
+                                selected
+                            <?php } ?>
+                        >
+                            <?php echo $time_step ?>
+                        </option>
+                    <?php } ?>
+                </select>
+                <div>Show users a donation pop-up after they spend the configured amount of time inactive on the website.</div>
+            </td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">
+                <div>Donation popup throttle rate:</div>
+            </th>
+            <td>
+                <input type="number" min="0" step="1"
+                       style="vertical-align: bottom"
+                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS; ?>"
+                       value="<?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS)); ?>"/>
+                <select name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER; ?>">
+                    <?php
+                    foreach (Blink\Constants::TIME_LEAPS as $time_step) { ?>
+                        <option
+                                value="<?php echo $time_step ?>"
+                            <?php
+                            if($time_step == esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER))) {
+                                ?>
+                                selected
+                            <?php } ?>
+                        >
+                            <?php echo $time_step ?>
+                        </option>
+                    <?php } ?>
+                </select>
+                <div>The minimum time to wait between consecutive appearances of the donation pop-up to a user.</div>
             </td>
         </tr>
     </table>
