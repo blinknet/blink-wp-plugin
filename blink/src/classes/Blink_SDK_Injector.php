@@ -34,6 +34,7 @@ class SDK_Injector
         $enableUserDonationPopUp = get_option(Constants::DATABASE_OPTIONS_ENABLE_DONATE_POP_UP);
         if(!empty($enableUserDonationPopUp) && $enableUserDonationPopUp == Constants::DONATIONS_ENABLE_POP_UP) {
             $inactiveSeconds = SDK_Injector::_helper_get_inactive_period();
+            $activeSeconds = SDK_Injector::_helper_get_active_period();
             $throttleSeconds = SDK_Injector::_helper_get_pop_up_throttle_rate();
         }
         ?>
@@ -48,6 +49,9 @@ class SDK_Injector
                         <?php if(!empty($enableUserDonationPopUp) && $enableUserDonationPopUp == Constants::DONATIONS_ENABLE_POP_UP) { ?>
                             <?php if($inactiveSeconds != null) { ?>
                             inactiveSeconds : <?php echo $inactiveSeconds?>,
+                            <?php } ?>
+                            <?php if($activeSeconds != null) { ?>
+                            afterPageEnterSeconds : <?php echo $activeSeconds?>,
                             <?php } ?>
                             <?php if($throttleSeconds != null) { ?>
                             throttleSeconds : <?php echo $throttleSeconds?>,
@@ -65,7 +69,6 @@ class SDK_Injector
         <?php
     }
 
-
     private static function _helper_get_inactive_period(){
         $inactiveSeconds = null;
         $dbInactiveSecondsValue = get_option(Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS);
@@ -77,6 +80,19 @@ class SDK_Injector
             $inactiveSeconds = intval($dbInactiveSecondsValue) * Constants::get_time_seconds_multiplier($dbInactiveSecondsMultiplierValue);
         }
         return $inactiveSeconds;
+    }
+
+    private static function _helper_get_active_period(){
+        $activeSeconds = null;
+        $dbActiveSecondsValue = get_option(Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS);
+        $dbActiveSecondsMultiplierValue = get_option(Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER);
+        if(!empty($dbActiveSecondsValue) &&
+            !empty($dbActiveSecondsMultiplierValue) &&
+            intval($dbActiveSecondsValue) > 0
+        ) {
+            $activeSeconds = intval($dbActiveSecondsValue) * Constants::get_time_seconds_multiplier($dbActiveSecondsMultiplierValue);
+        }
+        return $activeSeconds;
     }
 
     private static function _helper_get_pop_up_throttle_rate(){

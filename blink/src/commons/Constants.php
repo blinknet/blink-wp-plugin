@@ -26,9 +26,8 @@ class Constants
     const DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS = '__blink_donation_pop_up_inactive_seconds';
     const DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS_MULTIPLIER = '__blink_donation_pop_up_inactive_seconds_multiplier';
 
-//TODO(MIKE) WILL BE USED LATER
-//    const DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS = '__blink_donation_pop_up_after_page_enter_seconds';
-//    const DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER = '__blink_donation_pop_up_after_page_enter_seconds_multiplier';
+    const DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS = '__blink_donation_pop_up_after_page_enter_seconds';
+    const DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER = '__blink_donation_pop_up_after_page_enter_seconds_multiplier';
 
     const DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS = '__blink_donation_throttle_seconds';
     const DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER = '__blink_donation_throttle_seconds_multiplier';
