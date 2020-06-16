@@ -79,6 +79,32 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
             </td>
         </tr>
         <tr valign="top">
+            <th scope="row">Active time until pop-up is shown:</th>
+            <td>
+                <input type="number" min="0" step="1"
+                       style="vertical-align: bottom"
+                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS; ?>"
+                       value="<?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS)); ?>"/>
+                <select style="vertical-align: bottom"
+                        name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER; ?>">
+                    <?php
+                    foreach (array_slice(Blink\Constants::TIME_LEAPS,0,2) as $time_step) { ?>
+                        <option
+                                value="<?php echo $time_step ?>"
+                            <?php
+                            if($time_step == esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER))) {
+                                ?>
+                                selected
+                            <?php } ?>
+                        >
+                            <?php echo $time_step ?>
+                        </option>
+                    <?php } ?>
+                </select>
+                <div>After a user spends the configured amount of time on a page, show them a donation pop-up.</div>
+            </td>
+        </tr>
+        <tr valign="top">
             <th scope="row">Inactive time until pop-up is shown:</th>
             <td>
                 <input type="number" min="0" step="1"
