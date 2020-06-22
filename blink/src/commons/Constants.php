@@ -32,8 +32,9 @@ class Constants
     const DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS = '__blink_donation_throttle_seconds';
     const DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER = '__blink_donation_throttle_seconds_multiplier';
 
-//TODO(MIKE) WILL BE USED LATER
-    const DATABASE_OPTIONS_DONATE_THROTTLE_COUNT_PER_SESSION = '__blink_donation_throttle_count_per_session';
+    const DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_DESKTOP = '__blink_widget_position_offset_desktop';
+    const DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_MOBILE = '__blink_widget_position_offset_mobile';
+
 
     // --------------------------- Form Value Constants -------------------------------------
     const DONATIONS_AFTER_EACH_ARTICLE = '_blink_donation_after_article';

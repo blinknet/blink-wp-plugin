@@ -92,6 +92,16 @@ class SettingsPage
             Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
             Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER
         );
+
+        // Widget position settings
+        register_setting(
+            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
+            Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_DESKTOP
+        );
+        register_setting(
+            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
+            Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_MOBILE
+        );
     }
 
     /**

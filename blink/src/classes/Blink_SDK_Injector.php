@@ -31,6 +31,16 @@ class SDK_Injector
             return;
         }
 
+        $widgetPositionOptions = array();
+        $desktopOffset = get_option(Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_DESKTOP);
+        if(!empty($desktopOffset) && intval($desktopOffset) > 0) {
+            $widgetPositionOptions["desktop"] = intval($desktopOffset);
+        }
+        $mobileOffset = get_option(Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_MOBILE);
+        if(!empty($mobileOffset) && intval($mobileOffset) > 0) {
+            $widgetPositionOptions["mobile"] = intval($mobileOffset);
+        }
+
         $donateModalOptions = array();
         if(!empty(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE))) {
             $donateModalOptions["message"] = sanitize_text_field(get_option(Constants::DATABASE_OPTIONS_DONATE_MESSAGE));
@@ -55,6 +65,7 @@ class SDK_Injector
             function initializeBlinkMerchant() {
                 blinkSDK.init({
                     clientId: "<?php echo $merchantAlias ?>",
+                    widgetPositionYOffset : <?php if(!empty($widgetPositionOptions)) { echo json_encode($widgetPositionOptions);} else { ?>{}<?php } ?>,
                     donateModal : <?php if(!empty($donateModalOptions)) { echo json_encode($donateModalOptions);} else { ?>{}<?php } ?>,
                 });
             }
