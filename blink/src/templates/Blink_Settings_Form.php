@@ -1,16 +1,3 @@
-<?php
-if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT)))){ ?>
-<h3 style="margin-top: 40px;">
-    Configured plugin running on the <a
-            target="_blank"
-            href="<?php echo Blink\Constants::get_website_url()?>"
-            style=" background-color: #e2e2e2; border-radius: 5px; padding: 4px; text-align: center; color:#1B7E8C ">
-        <?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT))?></a>
-    environment using the
-    <span style=" background-color: #e2e2e2; border-radius: 5px; padding: 4px; text-align: center; color:#1B7E8C ">
-        <?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_MERCHANT_ALIAS))?></span> merchant.
-</h3>
-<?php } ?>
 <form method="post" action="options.php" id="blink-plugin-settings-form-id">
     <?php settings_fields(Blink\Constants::DATABASE_OPTIONS_SETTINGS_GROUP); ?>
     <table class="form-table">
@@ -54,129 +41,27 @@ if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONM
                 />
             </td>
         </tr>
-        <tr valign="top">
-            <th scope="row">Custom donation message:</th>
-            <td>
-                <textarea
-                        rows="6"
-                        cols="50"
-                        placeholder="<?php echo Blink\Constants::DONATIONS_CUSTOM_MESSAGE_PLACEHOLDER; ?>"
-                        name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE; ?>"
-                        form="blink-plugin-settings-form-id"><?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_MESSAGE)) ?></textarea>
-            </td>
-        </tr>
-        <tr valign="top">
-            <th scope="row">Wallet offset for desktop:</th>
-            <td>
-                <input type="number" min="0" step="1"
-                       style="vertical-align: bottom"
-                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_DESKTOP; ?>"
-                       value="<?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_DESKTOP)); ?>"/>
-                <div>Move the Blink wallet up by the number of pixels for users on a desktop.</div>
-            </td>
-        </tr>
-        <tr valign="top">
-            <th scope="row">Wallet offset for mobile:</th>
-            <td>
-                <input type="number" min="0" step="1"
-                       style="vertical-align: bottom"
-                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_MOBILE; ?>"
-                       value="<?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_MOBILE)); ?>"/>
-                <div>Move the Blink wallet up by the number of pixels for mobile users.</div>
-            </td>
-        </tr>
-        <tr valign="top">
-            <th scope="row">Enable donation pop-up:</th>
-            <td><input type="checkbox"
-                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_ENABLE_DONATE_POP_UP; ?>"
-                       value="<?php echo Blink\Constants::DONATIONS_ENABLE_POP_UP; ?>"
-                    <?php
-                    if(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_ENABLE_DONATE_POP_UP)) == Blink\Constants::DONATIONS_ENABLE_POP_UP) {
-                        ?>
-                        checked
-                    <?php } ?>
-                />
-            </td>
-        </tr>
-        <tr valign="top">
-            <th scope="row">Active time until pop-up is shown:</th>
-            <td>
-                <input type="number" min="0" step="1"
-                       style="vertical-align: bottom"
-                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS; ?>"
-                       value="<?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS)); ?>"/>
-                <select style="vertical-align: bottom"
-                        name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER; ?>">
-                    <?php
-                    foreach (array_slice(Blink\Constants::TIME_LEAPS,0,2) as $time_step) { ?>
-                        <option
-                                value="<?php echo $time_step ?>"
-                            <?php
-                            if($time_step == esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER))) {
-                                ?>
-                                selected
-                            <?php } ?>
-                        >
-                            <?php echo $time_step ?>
-                        </option>
-                    <?php } ?>
-                </select>
-                <div>After a user spends the configured amount of time on a page, show them a donation pop-up.</div>
-            </td>
-        </tr>
-        <tr valign="top">
-            <th scope="row">Inactive time until pop-up is shown:</th>
-            <td>
-                <input type="number" min="0" step="1"
-                       style="vertical-align: bottom"
-                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS; ?>"
-                       value="<?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS)); ?>"/>
-                <select style="vertical-align: bottom"
-                        name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS_MULTIPLIER; ?>">
-                    <?php
-                    foreach (array_slice(Blink\Constants::TIME_LEAPS,0,2) as $time_step) { ?>
-                        <option
-                                value="<?php echo $time_step ?>"
-                            <?php
-                            if($time_step == esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS_MULTIPLIER))) {
-                                ?>
-                                selected
-                            <?php } ?>
-                        >
-                            <?php echo $time_step ?>
-                        </option>
-                    <?php } ?>
-                </select>
-                <div>Show users a donation pop-up after they spend the configured amount of time inactive on the website.</div>
-            </td>
-        </tr>
-        <tr valign="top">
-            <th scope="row">
-                <div>Donation popup throttle rate:</div>
-            </th>
-            <td>
-                <input type="number" min="0" step="1"
-                       style="vertical-align: bottom"
-                       name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS; ?>"
-                       value="<?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS)); ?>"/>
-                <select name="<?php echo Blink\Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER; ?>">
-                    <?php
-                    foreach (Blink\Constants::TIME_LEAPS as $time_step) { ?>
-                        <option
-                                value="<?php echo $time_step ?>"
-                            <?php
-                            if($time_step == esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER))) {
-                                ?>
-                                selected
-                            <?php } ?>
-                        >
-                            <?php echo $time_step ?>
-                        </option>
-                    <?php } ?>
-                </select>
-                <div>The minimum time to wait between consecutive appearances of the donation pop-up to a user.</div>
-            </td>
-        </tr>
     </table>
+    <h3 style="margin-top: 40px;">
+        Manage revenue, content wording and pricing settings for this site in your
+            <a
+                target="_blank"
+                href="<?php echo Blink\Constants::get_dashboard_url()?>"
+                style=" background-color: #e2e2e2; border-radius: 5px; padding: 4px; text-align: center; color:#1B7E8C ">
+                Blink publisher dashboard</a>.
+    </h3>
+    <?php
+    if(!empty(esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT)))){ ?>
+        <h3 style="margin-top: 40px;">
+            Configured plugin running on the <a
+                    target="_blank"
+                    href="<?php echo Blink\Constants::get_website_url()?>"
+                    style=" background-color: #e2e2e2; border-radius: 5px; padding: 4px; text-align: center; color:#1B7E8C ">
+                <?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_RUNNING_ENVIRONMENT))?></a>
+            environment using the
+            <span style=" background-color: #e2e2e2; border-radius: 5px; padding: 4px; text-align: center; color:#1B7E8C ">
+        <?php echo esc_attr(get_option(Blink\Constants::DATABASE_OPTIONS_MERCHANT_ALIAS))?></span> merchant.
+        </h3>
+    <?php } ?>
     <?php submit_button(); ?>
 </form>

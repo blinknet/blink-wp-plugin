@@ -49,59 +49,6 @@ class SettingsPage
             Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
             Constants::DATABASE_OPTIONS_DONATE_AFTER_CONTENT
         );
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_DONATE_MESSAGE
-        );
-
-        //---- Options for donation pop up
-
-        // enable or disable user pop-up
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_ENABLE_DONATE_POP_UP
-        );
-
-        // Active time pop-up
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS
-        );
-
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_DONATE_POP_UP_AFTER_PAGE_ENTER_SECONDS_MULTIPLIER
-        );
-
-        // Inactive time donation pop-up
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS
-        );
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_DONATE_POP_UP_INACTIVE_SECONDS_MULTIPLIER
-        );
-
-        // Throttle settings
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS
-        );
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_DONATE_THROTTLE_SECONDS_MULTIPLIER
-        );
-
-        // Widget position settings
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_DESKTOP
-        );
-        register_setting(
-            Constants::DATABASE_OPTIONS_SETTINGS_GROUP,
-            Constants::DATABASE_OPTIONS_WIDGET_POSITION_OFFSET_MOBILE
-        );
     }
 
     /**
