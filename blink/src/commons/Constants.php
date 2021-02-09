@@ -28,7 +28,7 @@ class Constants
 
     //--------------------------- Environment Settings  --------------------------------------
     const ENVIRONMENTS = array('Live','Test');
-    const TESTING_DOMAIN = 'demo.blink.net/';
+    const TESTING_DOMAIN = 'test.blink.net/';
     const PRODUCTION_DOMAIN = 'blink.net/';
     const PUBLISHER_DASHBOARD = 'dashboard.';
     const PAYWALL_VERSION = '1.0/';
